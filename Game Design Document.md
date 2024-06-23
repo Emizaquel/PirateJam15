@@ -10,4 +10,6 @@ with more than one level with distinct mechanics
 > - sidescroller
 > - isometric
 
-> 
+> do we want a dash mechanic?
+> - yes
+> - no
