@@ -1,6 +1,101 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceb4ro2rafjt6"]
+[gd_scene load_steps=8 format=3 uid="uid://ceb4ro2rafjt6"]
 
 [ext_resource type="PackedScene" uid="uid://chrfbhfq6s0so" path="res://Elements/shadow.tscn" id="1_8ltsl"]
+[ext_resource type="Shader" path="res://Shaders/shadow.gdshader" id="2_68rjt"]
+
+[sub_resource type="GDScript" id="GDScript_f8li1"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
+@onready var shadow = [
+	$shadow_border1,
+	$shadow_border2,
+	$shadow_border3,
+	$shadow_border4,
+	$shadow_border5,
+	$shadow_border6,
+	$shadow_border7,
+	$shadow_border8,
+]
+
+func _physics_process(delta):
+	# Add the gravity.
+	#if not is_on_floor():
+		#velocity.y += gravity * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var horizontal = Input.get_axis(\"ui_left\", \"ui_right\")
+	if horizontal:
+		velocity.x = horizontal * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+	var vertical = Input.get_axis(\"ui_up\", \"ui_down\")
+	if vertical:
+		velocity.y = vertical * SPEED
+	else:
+		velocity.y = move_toward(velocity.y, 0, SPEED)
+
+	move_and_slide()
+
+func _process(delta):
+	for detector in shadow:
+		if(not detector.has_overlapping_areas()):
+			print(\"true\")
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ic5ul"]
+shader = ExtResource("2_68rjt")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="GDScript" id="GDScript_ux5cg"]
+script/source = "extends Polygon2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var points = []
+	var num_sides = 6.0
+	var height = 30.0
+	var radius = 10.0
+	var center_segment = height - (radius*2)
+	if((center_segment)<0):
+		radius = height/2
+		center_segment = 0
+	center_segment = center_segment/2
+	var angles = range(num_sides+1)
+	for i in angles:
+		i = i*PI/num_sides
+		points.append(Vector2(sin(i)*radius + center_segment, cos(i)*radius))
+	var temp = []
+	for point in points:
+		temp.append(Vector2(0-point.x, 0-point.y))
+	points.append_array(temp)
+	polygon = points
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jivgo"]
+radius = 8.0
+height = 34.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w407t"]
+radius = 2.0
 
 [node name="Test" type="Node2D"]
 
@@ -38,8 +133,77 @@ layout_mode = 2
 color = Color(0.971665, 0.810846, 7.70092e-07, 1)
 
 [node name="Shadow" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(0, 100), Vector2(100, 0)])
+position = Vector2(177.665, 132)
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(20, 0), Vector2(20, 200), Vector2(-20, 200)])
 
 [node name="Shadow2" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
-position = Vector2(210, 143)
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(0, 100), Vector2(100, 0)])
+position = Vector2(198, 132)
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(200, 0), Vector2(200, 200), Vector2(-20, 200)])
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="CanvasLayer"]
+position = Vector2(217, 158)
+motion_mode = 1
+script = SubResource("GDScript_f8li1")
+
+[node name="Polygon2D2" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
+visible = false
+material = SubResource("ShaderMaterial_ic5ul")
+color = Color(0, 0, 0, 1)
+script = SubResource("GDScript_ux5cg")
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
+rotation = 0.0230543
+color = Color(0.262745, 0, 0, 1)
+polygon = PackedVector2Array(7.99787, -0.184418, -8.99761, 0.20747, -5.36751, -15.8805, -8.38976, -16.8111, -9.45865, -19.7872, -18.4102, -17.5803, -9.57391, -24.7859, -7.66666, -28.8309, -3.71382, -30.9226, 1.3079, -30.0381, 5.4221, -25.1317, 5.51431, -21.1327, 2.60731, -17.0646)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(-2, -14)
+shape = SubResource("CapsuleShape2D_jivgo")
+
+[node name="shadow_border1" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(0, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border1"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border2" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(-10, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border2"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border3" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(-15, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border3"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border4" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(-11, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border4"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border5" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(0, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border5"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border6" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(11, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border6"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border7" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(15, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border7"]
+shape = SubResource("CircleShape2D_w407t")
+
+[node name="shadow_border8" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(11, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border8"]
+shape = SubResource("CircleShape2D_w407t")
