@@ -10,6 +10,8 @@ size = Vector2(32, 32)
 [node name="Player" parent="." instance=ExtResource("1_ykv58")]
 position = Vector2(213, 141)
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
 [node name="Wall" type="StaticBody2D" parent="."]
 position = Vector2(587, 627)
 scale = Vector2(47.954, 1.44595)

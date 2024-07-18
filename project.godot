@@ -10,9 +10,18 @@ config_version=5
 
 [application]
 
-config/name="ShadowAlchemy"
+config/name="PirateJam15"
 run/main_scene="res://scenes/level.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://assets/icon.png"
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/size/window_width_override=960
+window/size/window_height_override=540
+window/stretch/mode="viewport"
 
 [dotnet]
 
