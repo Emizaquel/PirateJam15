@@ -19,13 +19,15 @@ config/icon="res://assets/icon.png"
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/window_width_override=960
-window/size/window_height_override=540
 window/stretch/mode="viewport"
 
 [layer_names]
 
 2d_physics/layer_17="Shadow"
+
+[dotnet]
+
+project/assembly_name="PirateJam15"
 
 [rendering]
 
