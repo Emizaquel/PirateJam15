@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceb4ro2rafjt6"]
+
+[ext_resource type="PackedScene" uid="uid://chrfbhfq6s0so" path="res://Elements/shadow.tscn" id="1_8ltsl"]
+
+[node name="Test" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+color = Color(0.1548, 0.666944, 1, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+color = Color(0.308531, 0.861762, 0.673444, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+color = Color(0.997505, 0.574627, 0.616142, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+color = Color(0.971665, 0.810846, 7.70092e-07, 1)
+
+[node name="Shadow" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(0, 100), Vector2(100, 0)])
+
+[node name="Shadow2" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
+position = Vector2(210, 143)
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(0, 100), Vector2(100, 0)])
