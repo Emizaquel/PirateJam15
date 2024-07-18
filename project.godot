@@ -11,8 +11,18 @@ config_version=5
 [application]
 
 config/name="PirateJam15"
-config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://assets/icon.png"
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="PirateJam15"
 
 [rendering]
 
