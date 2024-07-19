@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2hix5x1g6w8t"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_480fq"]
+[ext_resource type="Script" path="res://scripts/utils/fsm/state_machine.gd" id="2_36g7g"]
+[ext_resource type="Script" path="res://scenes/player/states/idle.gd" id="3_5fl74"]
+[ext_resource type="Script" path="res://scenes/player/states/walk.gd" id="4_k3w1x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jtg22"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_swp45"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_480fq")
+
+[node name="Animations" type="Node" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animations"]
+unique_name_in_owner = true
+root_node = NodePath("../..")
+
+[node name="Sprite" type="Sprite2D" parent="Animations"]
+unique_name_in_owner = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_jtg22")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_swp45")
+debug_color = Color(0.875039, 0.282257, 0.512525, 0.42)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+script = ExtResource("2_36g7g")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_5fl74")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("4_k3w1x")
+
+[node name="ProtoSprite" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.517647, 1, 1)
