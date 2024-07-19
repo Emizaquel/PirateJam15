@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceb4ro2rafjt6"]
+[gd_scene load_steps=9 format=3 uid="uid://ceb4ro2rafjt6"]
 
-[ext_resource type="PackedScene" uid="uid://chrfbhfq6s0so" path="res://Elements/shadow.tscn" id="1_8ltsl"]
-[ext_resource type="Shader" path="res://Shaders/shadow.gdshader" id="2_68rjt"]
+[ext_resource type="PackedScene" uid="uid://chrfbhfq6s0so" path="res://Shadows/vertical shadow.tscn" id="1_brjev"]
+[ext_resource type="PackedScene" uid="uid://c3xlcm3qxer5e" path="res://Shadows/horizontal shadow.tscn" id="1_eaybk"]
+[ext_resource type="Shader" path="res://Shadows/code/shadow.gdshader" id="2_ip7jd"]
 
 [sub_resource type="GDScript" id="GDScript_f8li1"]
 script/source = "extends CharacterBody2D
@@ -12,7 +13,7 @@ const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
-@onready var shadow = [
+@onready var shadows = [
 	$shadow_border1,
 	$shadow_border2,
 	$shadow_border3,
@@ -22,6 +23,11 @@ var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
 	$shadow_border7,
 	$shadow_border8,
 ]
+
+var fullSpawned = false
+
+func _ready():
+	$\"../Horizontal Shadow/collider\".disabled = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -49,13 +55,19 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _process(delta):
-	for detector in shadow:
-		if(not detector.has_overlapping_areas()):
-			print(\"true\")
+	if fullSpawned:
+		for shadow in shadows:
+			if(not shadow.has_overlapping_areas()):
+				print(\"detected light\")
+				break
+
+
+func _on_spawn_grace_timeout():
+	fullSpawned = true
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ic5ul"]
-shader = ExtResource("2_68rjt")
+shader = ExtResource("2_ip7jd")
 shader_parameter/shadow_darkness = 0.2
 
 [sub_resource type="GDScript" id="GDScript_ux5cg"]
@@ -132,13 +144,14 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 color = Color(0.971665, 0.810846, 7.70092e-07, 1)
 
-[node name="Shadow" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
-position = Vector2(177.665, 132)
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(20, 0), Vector2(20, 200), Vector2(-20, 200)])
+[node name="Horizontal Shadow" parent="CanvasLayer" instance=ExtResource("1_eaybk")]
+visible = false
+position = Vector2(260, 173)
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(-200, 0), Vector2(-200, -100), Vector2(0, -100)])
 
-[node name="Shadow2" parent="CanvasLayer" instance=ExtResource("1_8ltsl")]
-position = Vector2(198, 132)
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(200, 0), Vector2(200, 200), Vector2(-20, 200)])
+[node name="Vertical Shadow" parent="CanvasLayer" instance=ExtResource("1_brjev")]
+position = Vector2(260, 173)
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(100, 0), Vector2(100, 200), Vector2(0, 200)])
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="CanvasLayer"]
 position = Vector2(217, 158)
@@ -146,64 +159,96 @@ motion_mode = 1
 script = SubResource("GDScript_f8li1")
 
 [node name="Polygon2D2" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
-visible = false
 material = SubResource("ShaderMaterial_ic5ul")
 color = Color(0, 0, 0, 1)
 script = SubResource("GDScript_ux5cg")
 
 [node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(1, 0)
 rotation = 0.0230543
 color = Color(0.262745, 0, 0, 1)
 polygon = PackedVector2Array(7.99787, -0.184418, -8.99761, 0.20747, -5.36751, -15.8805, -8.38976, -16.8111, -9.45865, -19.7872, -18.4102, -17.5803, -9.57391, -24.7859, -7.66666, -28.8309, -3.71382, -30.9226, 1.3079, -30.0381, 5.4221, -25.1317, 5.51431, -21.1327, 2.60731, -17.0646)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(-2, -14)
+position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_jivgo")
 
 [node name="shadow_border1" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border1"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border2" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(-10, -8)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border2"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border3" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(-15, 0)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border3"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border4" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(-11, 8)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border4"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border5" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(0, 10)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border5"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border6" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(11, -7)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border6"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border7" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(15, 0)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border7"]
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border8" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
 position = Vector2(11, 8)
+collision_layer = 0
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border8"]
 shape = SubResource("CircleShape2D_w407t")
+
+[node name="SpawnGrace" type="Timer" parent="CanvasLayer/CharacterBody2D"]
+wait_time = 0.1
+autostart = true
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer"]
+position = Vector2(360, 300)
+rotation = -0.174533
+skew = 0.174533
+polygon = PackedVector2Array(0, -30, -100, -30, -100, 30, 0, 30)
+
+[node name="Daytime" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="CanvasLayer/CharacterBody2D/SpawnGrace" to="CanvasLayer/CharacterBody2D" method="_on_spawn_grace_timeout"]

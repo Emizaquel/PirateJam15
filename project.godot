@@ -14,6 +14,10 @@ config/name="PirateJam15"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[layer_names]
+
+2d_physics/layer_17="Shadow"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
