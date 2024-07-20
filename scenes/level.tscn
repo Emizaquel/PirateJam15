@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2kwk5gebv3t7"]
+
+[ext_resource type="PackedScene" uid="uid://c2hix5x1g6w8t" path="res://scenes/player/player.tscn" id="1_ykv58"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgire"]
+size = Vector2(32, 32)
+
+[node name="Level" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ykv58")]
+position = Vector2(213, 141)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(587, 627)
+scale = Vector2(47.954, 1.44595)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("RectangleShape2D_bgire")
+
+[node name="ColorRect" type="ColorRect" parent="Wall/CollisionShape2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(1638, 241)
+scale = Vector2(47.954, 1.44595)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("RectangleShape2D_bgire")
+
+[node name="ColorRect" type="ColorRect" parent="Wall2/CollisionShape2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wall3" type="StaticBody2D" parent="."]
+position = Vector2(145, 420)
+scale = Vector2(21.6067, 2.89956)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+shape = SubResource("RectangleShape2D_bgire")
+
+[node name="ColorRect" type="ColorRect" parent="Wall3/CollisionShape2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
