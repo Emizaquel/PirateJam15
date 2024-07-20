@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var collider = $collider
 @onready var polygon = $visual
-@onready var daylight:Timer = $"../../Daytime" # update this to the actual timer object
+@export var daylight:Timer # update this to the actual timer object
 
 @export var verticies:Array[Vector2] = []
 

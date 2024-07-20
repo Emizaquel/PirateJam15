@@ -1,12 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceb4ro2rafjt6"]
+[gd_scene load_steps=11 format=3 uid="uid://ceb4ro2rafjt6"]
 
 [ext_resource type="PackedScene" uid="uid://chrfbhfq6s0so" path="res://Shadows/vertical shadow.tscn" id="1_brjev"]
 [ext_resource type="PackedScene" uid="uid://c3xlcm3qxer5e" path="res://Shadows/horizontal shadow.tscn" id="1_eaybk"]
 [ext_resource type="Shader" path="res://Shadows/code/shadow.gdshader" id="2_ip7jd"]
+[ext_resource type="Texture2D" uid="uid://brmqiloxvahky" path="res://Shadows/Plague_doc.png" id="4_2m2mj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lu1kg"]
+size = Vector2(50, 50)
 
 [sub_resource type="GDScript" id="GDScript_f8li1"]
 script/source = "extends CharacterBody2D
 
+@export var hurt_indicator:Node2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -26,8 +31,8 @@ var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
 
 var fullSpawned = false
 
-func _ready():
-	$\"../Horizontal Shadow/collider\".disabled = true
+#func _ready():
+	#$\"../Horizontal Shadow/collider\".disabled = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -58,8 +63,9 @@ func _process(delta):
 	if fullSpawned:
 		for shadow in shadows:
 			if(not shadow.has_overlapping_areas()):
-				print(\"detected light\")
-				break
+				hurt_indicator.visible = true
+				return
+	hurt_indicator.visible = false
 
 
 func _on_spawn_grace_timeout():
@@ -73,13 +79,12 @@ shader_parameter/shadow_darkness = 0.2
 [sub_resource type="GDScript" id="GDScript_ux5cg"]
 script/source = "extends Polygon2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var points = []
-	var num_sides = 6.0
-	var height = 30.0
-	var radius = 10.0
+	var num_sides = 4.0
+	var height = 10.0
+	var radius = 5.0
 	var center_segment = height - (radius*2)
 	if((center_segment)<0):
 		radius = height/2
@@ -103,94 +108,134 @@ func _process(delta):
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jivgo"]
-radius = 8.0
-height = 34.0
+radius = 5.0
+height = 10.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w407t"]
-radius = 2.0
+radius = 1.0
 
 [node name="Test" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+custom_minimum_size = Vector2(100, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.574328, 0.574328, 0.574328, 1)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
+[node name="Building" type="Node2D" parent="CanvasLayer"]
+position = Vector2(156, 79)
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-color = Color(0.1548, 0.666944, 1, 1)
+[node name="Horizontal Shadow" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
 
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-color = Color(0.308531, 0.861762, 0.673444, 1)
+[node name="Horizontal Shadow2" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
+position = Vector2(50, 0)
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
 
-[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-color = Color(0.997505, 0.574627, 0.616142, 1)
+[node name="Vertical Shadow" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_brjev")]
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(50, 0), Vector2(50, 100), Vector2(0, 100)])
 
-[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-color = Color(0.971665, 0.810846, 7.70092e-07, 1)
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/Building"]
+polygon = PackedVector2Array(50, 0, 50, -50, 0, -50, 0, 0)
 
-[node name="Horizontal Shadow" parent="CanvasLayer" instance=ExtResource("1_eaybk")]
-visible = false
-position = Vector2(260, 173)
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(-200, 0), Vector2(-200, -100), Vector2(0, -100)])
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/Building"]
+position = Vector2(26, -26)
 
-[node name="Vertical Shadow" parent="CanvasLayer" instance=ExtResource("1_brjev")]
-position = Vector2(260, 173)
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(100, 0), Vector2(100, 200), Vector2(0, 200)])
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Building/StaticBody2D"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_lu1kg")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="CanvasLayer"]
-position = Vector2(217, 158)
+[node name="Area2D" type="Area2D" parent="CanvasLayer/Building"]
+position = Vector2(26, -26)
+collision_layer = 65536
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Building/Area2D"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_lu1kg")
+
+[node name="Building2" type="Node2D" parent="CanvasLayer"]
+position = Vector2(194, 139)
+
+[node name="Horizontal Shadow" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+
+[node name="Horizontal Shadow2" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
+position = Vector2(50, 0)
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+
+[node name="Vertical Shadow" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_brjev")]
+daylight = NodePath("../../../Daytime")
+verticies = Array[Vector2]([Vector2(0, 0), Vector2(50, 0), Vector2(50, 100), Vector2(0, 100)])
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/Building2"]
+polygon = PackedVector2Array(50, 0, 50, -50, 0, -50, 0, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/Building2"]
+position = Vector2(26, -26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Building2/StaticBody2D"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_lu1kg")
+
+[node name="Area2D" type="Area2D" parent="CanvasLayer/Building2"]
+position = Vector2(26, -26)
+collision_layer = 65536
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Building2/Area2D"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_lu1kg")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="CanvasLayer" node_paths=PackedStringArray("hurt_indicator")]
+position = Vector2(128, 64)
 motion_mode = 1
 script = SubResource("GDScript_f8li1")
+hurt_indicator = NodePath("Polygon2D3")
 
 [node name="Polygon2D2" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
 material = SubResource("ShaderMaterial_ic5ul")
 color = Color(0, 0, 0, 1)
 script = SubResource("GDScript_ux5cg")
 
-[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(1, 0)
-rotation = 0.0230543
-color = Color(0.262745, 0, 0, 1)
-polygon = PackedVector2Array(7.99787, -0.184418, -8.99761, 0.20747, -5.36751, -15.8805, -8.38976, -16.8111, -9.45865, -19.7872, -18.4102, -17.5803, -9.57391, -24.7859, -7.66666, -28.8309, -3.71382, -30.9226, 1.3079, -30.0381, 5.4221, -25.1317, 5.51431, -21.1327, 2.60731, -17.0646)
+[node name="Polygon2D" type="Sprite2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(1, -14)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_2m2mj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_jivgo")
 
 [node name="shadow_border1" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(0, -10)
+position = Vector2(0, -6)
 collision_layer = 0
 collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border1"]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border2" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(-10, -8)
+position = Vector2(-7, -5)
 collision_layer = 0
 collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border2"]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border3" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(-15, 0)
+position = Vector2(-11, 0)
 collision_layer = 0
 collision_mask = 65536
 
@@ -198,7 +243,7 @@ collision_mask = 65536
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border4" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(-11, 8)
+position = Vector2(-7, 6)
 collision_layer = 0
 collision_mask = 65536
 
@@ -206,7 +251,7 @@ collision_mask = 65536
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border5" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(0, 10)
+position = Vector2(0, 7)
 collision_layer = 0
 collision_mask = 65536
 
@@ -214,15 +259,16 @@ collision_mask = 65536
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border6" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(11, -7)
+position = Vector2(7, -5)
 collision_layer = 0
 collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/CharacterBody2D/shadow_border6"]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border7" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(15, 0)
+position = Vector2(11, 0)
 collision_layer = 0
 collision_mask = 65536
 
@@ -230,7 +276,7 @@ collision_mask = 65536
 shape = SubResource("CircleShape2D_w407t")
 
 [node name="shadow_border8" type="Area2D" parent="CanvasLayer/CharacterBody2D"]
-position = Vector2(11, 8)
+position = Vector2(7, 6)
 collision_layer = 0
 collision_mask = 65536
 
@@ -241,11 +287,10 @@ shape = SubResource("CircleShape2D_w407t")
 wait_time = 0.1
 autostart = true
 
-[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer"]
-position = Vector2(360, 300)
-rotation = -0.174533
-skew = 0.174533
-polygon = PackedVector2Array(0, -30, -100, -30, -100, 30, 0, 30)
+[node name="Polygon2D3" type="Polygon2D" parent="CanvasLayer/CharacterBody2D"]
+position = Vector2(0, -3)
+color = Color(0.747501, 0, 0.166365, 1)
+polygon = PackedVector2Array(-7, 7, -1, 1, -7, -5, -6, -6, 0, 0, 6, -6, 7, -5, 1, 1, 7, 7, 6, 8, 0, 2, -6, 8)
 
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 60.0

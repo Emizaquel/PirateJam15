@@ -2,8 +2,7 @@ extends Area2D
 
 @onready var collider = $collider
 @onready var polygon = $visual
-@onready var daylight = $"../../Daytime" # update this to the actual timer object
-
+@export var daylight:Timer # update this to the actual timer object
 @export var verticies:Array[Vector2] = []
 
 # Called when the node enters the scene tree for the first time.
