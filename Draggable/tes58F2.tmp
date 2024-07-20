@@ -7,28 +7,13 @@
 script/source = "extends StaticBody2D
 
 
-func _on_area_2d_body_entered(body:CharacterBody2D):
-	if(body.has_method(\"grab\")):
-		$Label.visible = true
-		body.grabbables.append($\".\")
-		body.interactables.append($\".\")
+func _on_area_2d_body_entered(body):
+	$Label.visible = true
 	pass # Replace with function body.
 
 
 func _on_area_2d_body_exited(body):
-	if(body.has_method(\"grab\")):
-		$Label.visible = false
-		body.grabbables.remove_at(body.grabbables.find($\".\"))
-		body.interactables.remove_at(body.interactables.find($\".\"))
-	pass # Replace with function body.
-
-func interact():
-	$flash.visible = true
-	$\"Flash timer\".start()
-
-
-func _on_flash_timer_timeout():
-	$flash.visible = false
+	$Label.visible = false
 	pass # Replace with function body.
 "
 
@@ -36,7 +21,7 @@ func _on_flash_timer_timeout():
 size = Vector2(32, 38)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7aera"]
-size = Vector2(40, 47)
+size = Vector2(36, 43)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shbyv"]
 border_width_left = 3
@@ -54,8 +39,7 @@ script/source = "extends CharacterBody2D
 
 const SPEED = 100.0
 
-var grabbables:Array[Node2D] = []
-var interactables:Array[Node2D] = []
+var grabbed
 
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -65,20 +49,11 @@ func _physics_process(delta):
 		velocity = direction.normalized() * SPEED
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
-		
-	grab(velocity, delta)
+
 	move_and_slide()
 
-func grab(velocity, delta):
-	for grabbale in grabbables:
-		if(Input.is_action_pressed(\"grab\")):
-			grabbale.position = grabbale.position + velocity*delta
+func grab():
 	pass
-
-func _input(event):
-	if event.is_action_pressed(\"interact\"):
-		for interactable in interactables:
-			interactable.call(\"interact\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o2rfi"]
@@ -111,10 +86,6 @@ position = Vector2(0, -32)
 position = Vector2(0, 12.5)
 shape = SubResource("RectangleShape2D_7aera")
 
-[node name="flash" type="Polygon2D" parent="crate"]
-visible = false
-polygon = PackedVector2Array(0, -44, -2, -52, -10, -54, -2, -56, 0, -63, 2, -56, 10, -54, 2, -52)
-
 [node name="Sprite2D" type="Sprite2D" parent="crate"]
 z_as_relative = false
 y_sort_enabled = true
@@ -132,9 +103,6 @@ text = "Press G to move
 Press X to interact"
 horizontal_alignment = 1
 
-[node name="Flash timer" type="Timer" parent="crate"]
-wait_time = 0.2
-
 [node name="Player" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
@@ -150,6 +118,7 @@ texture = ExtResource("1_00hh4")
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_o2rfi")
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
 [connection signal="body_entered" from="crate/Area2D" to="crate" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="crate/Area2D" to="crate" method="_on_area_2d_body_exited"]
-[connection signal="timeout" from="crate/Flash timer" to="crate" method="_on_flash_timer_timeout"]
