@@ -131,17 +131,17 @@ color = Color(0.574328, 0.574328, 0.574328, 1)
 position = Vector2(156, 79)
 
 [node name="Horizontal Shadow" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+polygon = PackedVector2Array(0, -50, -100, -50, -100, 0, 0, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Horizontal Shadow2" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
 position = Vector2(50, 0)
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+polygon = PackedVector2Array(0, -50, -100, -50, -100, 0, 0, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Vertical Shadow" parent="CanvasLayer/Building" node_paths=PackedStringArray("daylight") instance=ExtResource("1_brjev")]
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(50, 0), Vector2(50, 100), Vector2(0, 100)])
+polygon = PackedVector2Array(0, 0, 0, 100, 50, 100, 50, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/Building"]
 polygon = PackedVector2Array(50, 0, 50, -50, 0, -50, 0, 0)
@@ -166,17 +166,17 @@ shape = SubResource("RectangleShape2D_lu1kg")
 position = Vector2(194, 139)
 
 [node name="Horizontal Shadow" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+polygon = PackedVector2Array(0, -50, -100, -50, -100, 0, 0, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Horizontal Shadow2" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_eaybk")]
 position = Vector2(50, 0)
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(-100, 0), Vector2(-100, -50), Vector2(0, -50)])
+polygon = PackedVector2Array(0, -50, -100, -50, -100, 0, 0, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Vertical Shadow" parent="CanvasLayer/Building2" node_paths=PackedStringArray("daylight") instance=ExtResource("1_brjev")]
-daylight = NodePath("../../../Daytime")
-verticies = Array[Vector2]([Vector2(0, 0), Vector2(50, 0), Vector2(50, 100), Vector2(0, 100)])
+polygon = PackedVector2Array(0, 0, 0, 100, 50, 100, 50, 0)
+daylight = NodePath("../../../Daylight")
 
 [node name="Polygon2D" type="Polygon2D" parent="CanvasLayer/Building2"]
 polygon = PackedVector2Array(50, 0, 50, -50, 0, -50, 0, 0)
@@ -292,7 +292,8 @@ position = Vector2(0, -3)
 color = Color(0.747501, 0, 0.166365, 1)
 polygon = PackedVector2Array(-7, 7, -1, 1, -7, -5, -6, -6, 0, 0, 6, -6, 7, -5, 1, 1, 7, 7, 6, 8, 0, 2, -6, 8)
 
-[node name="Daytime" type="Timer" parent="."]
+[node name="Daylight" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 60.0
 autostart = true
 
