@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhu4pcigqbq4a"]
+
+[ext_resource type="Script" path="res://Navigation test/player.gd" id="1_grha3"]
+[ext_resource type="Texture2D" uid="uid://ik8t0r23cdv0" path="res://Navigation test/Plague_doc_posed.png" id="3_xt42k"]
+[ext_resource type="Script" path="res://Navigation test/NPC.gd" id="4_r2kd2"]
+[ext_resource type="Texture2D" uid="uid://ca8wxy0wmc5qw" path="res://Navigation test/NPC standin.png" id="5_vls2y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1gul8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_icq7n"]
+size = Vector2(50, 48)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vya8d"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_o6db5"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, 0, 480, 1, 480, 270, -1, 270)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[node name="Test" type="Node2D"]
+y_sort_enabled = true
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(80, 74)
+script = ExtResource("1_grha3")
+
+[node name="Sprite" type="Sprite2D" parent="player"]
+position = Vector2(0, -13)
+texture = ExtResource("3_xt42k")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_1gul8")
+
+[node name="Building" type="StaticBody2D" parent="."]
+position = Vector2(180, 106)
+
+[node name="front" type="Polygon2D" parent="Building"]
+polygon = PackedVector2Array(-25, 0, -25, -40, 25, -40, 25, 0)
+
+[node name="roof" type="Polygon2D" parent="Building"]
+color = Color(0.741176, 0, 0, 1)
+polygon = PackedVector2Array(30, -40, -30, -40, -28, -64, 28, -64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Building"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_icq7n")
+
+[node name="NPC" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(108, 97)
+script = ExtResource("4_r2kd2")
+player = NodePath("../player")
+
+[node name="Turn" type="Timer" parent="NPC"]
+autostart = true
+
+[node name="Sprite" type="Sprite2D" parent="NPC"]
+texture = ExtResource("5_vls2y")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Label" type="Label" parent="NPC"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -11.0
+offset_right = 3.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.764706, 0, 0, 1)
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC"]
+shape = SubResource("CircleShape2D_vya8d")
+
+[node name="RayCast2D" type="RayCast2D" parent="NPC"]
+target_position = Vector2(0, 100)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="NPC"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_o6db5")
+
+[connection signal="timeout" from="NPC/Turn" to="NPC" method="_on_turn_timeout"]
