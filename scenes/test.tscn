@@ -1,0 +1,222 @@
+[gd_scene load_steps=14 format=3 uid="uid://b2h10s5cfoxc"]
+
+[ext_resource type="Script" path="res://scripts/Player Scripts/Player.gd" id="1_elg3h"]
+[ext_resource type="Texture2D" uid="uid://dkoruks0qy7xg" path="res://assets/Plague_doc.png" id="1_xwsiy"]
+[ext_resource type="Script" path="res://scripts/Shadow Scripts/Vertical Shadow.gd" id="3_xmumu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4w64b"]
+radius = 3.5
+height = 23.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ajuxg"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e6efr"]
+normal = Vector2(0, 1)
+distance = -240.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gjwlm"]
+normal = Vector2(-1, 0)
+distance = -240.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_63wdg"]
+normal = Vector2(1, 0)
+distance = -240.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_e58l1"]
+a = Vector2(180, 0)
+b = Vector2(-180, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pn18a"]
+a = Vector2(210, 0)
+b = Vector2(-210, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_eurru"]
+a = Vector2(-180, 0)
+b = Vector2(180, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6rnq0"]
+a = Vector2(-154, 0)
+b = Vector2(154, 0)
+
+[sub_resource type="GDScript" id="GDScript_mbwsg"]
+script/source = "extends Timer
+
+var progress:float
+
+func _process(delta):
+	progress = time_left/wait_time
+"
+
+[node name="Test" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="street" type="Polygon2D" parent="Background"]
+color = Color(0.326679, 0.326679, 0.326679, 1)
+polygon = PackedVector2Array(0, 270, 60, 208, 420, 208, 480, 270)
+
+[node name="building" type="Polygon2D" parent="Background"]
+color = Color(0.526423, 0.526423, 0.526423, 1)
+polygon = PackedVector2Array(60, 208, 60, 80, 420, 80, 420, 208)
+
+[node name="Balcony" type="Polygon2D" parent="Background"]
+color = Color(0.32549, 0.32549, 0.32549, 1)
+polygon = PackedVector2Array(60, 125, 30, 150, 450, 150, 420, 125)
+
+[node name="Balcomy Edge" type="Polygon2D" parent="Background"]
+color = Color(0.82606, 0.82606, 0.82606, 1)
+polygon = PackedVector2Array(30, 150, 30, 156, 449, 156, 449, 150)
+
+[node name="roof" type="Polygon2D" parent="Background"]
+color = Color(0.32549, 0.32549, 0.32549, 1)
+polygon = PackedVector2Array(60, 80, 90, 64, 390, 64, 420, 80)
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.192157, 0, 0.176471, 1)
+
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite", "jump_timer", "floor", "feet", "vertical_eyes")]
+position = Vector2(260, 232)
+collision_layer = 0
+collision_mask = 7
+script = ExtResource("1_elg3h")
+sprite = NodePath("Sprite")
+jump_timer = NodePath("Jump")
+floor = NodePath("../Floor")
+feet = NodePath("feet")
+vertical_eyes = [NodePath("RayCast2D")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-0.5, -0.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="Jump" type="Timer" parent="Player"]
+one_shot = true
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+position = Vector2(0, -16)
+texture = ExtResource("1_xwsiy")
+
+[node name="feet" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/feet"]
+position = Vector2(-0.5, -0.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+target_position = Vector2(0, -1000)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="sun sign" type="Polygon2D" parent="Player"]
+position = Vector2(0, -13.235)
+color = Color(0.415686, 0, 0, 1)
+polygon = PackedVector2Array(-7, -7, -6, -8, 0, -1, 6, -8, 7, -7, 1, 0, 7, 6, 6, 7, 0, 1, -6, 7, -7, 6, -1, 0)
+
+[node name="World Bottom" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(242, 271)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World Bottom"]
+shape = SubResource("WorldBoundaryShape2D_ajuxg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(0, -31)
+shape = SubResource("WorldBoundaryShape2D_e6efr")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(-1, -119)
+shape = SubResource("WorldBoundaryShape2D_gjwlm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(0, -117)
+shape = SubResource("WorldBoundaryShape2D_63wdg")
+
+[node name="Passable Floors" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(240, 151)
+collision_layer = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Passable Floors"]
+position = Vector2(0, -71)
+shape = SubResource("SegmentShape2D_e58l1")
+one_way_collision = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passable Floors"]
+shape = SubResource("SegmentShape2D_pn18a")
+one_way_collision = true
+
+[node name="Jump Boundary" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(240, 208)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Jump Boundary"]
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_eurru")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Jump Boundary"]
+position = Vector2(0, -83)
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_eurru")
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Jump Boundary"]
+position = Vector2(0, -144)
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_6rnq0")
+one_way_collision = true
+
+[node name="Floor" type="Area2D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(0, 270, 0, 208, 480, 208, 480, 270)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(60, 125, 30, 150, 450, 150, 420, 125)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(60, 80, 90, 64, 390, 64, 420, 80)
+
+[node name="Scene Time" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+script = SubResource("GDScript_mbwsg")
+
+[node name="Vertical Shadow" type="Polygon2D" parent="."]
+position = Vector2(30, 153)
+rotation = 1.5708
+color = Color(0, 0, 0, 0.423529)
+polygon = PackedVector2Array(3, 0, -3, 1.90735e-06, -3, 300, 3, 300)
+
+[node name="Shadow" type="Area2D" parent="Vertical Shadow"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_xmumu")
+
+[node name="Collider" type="CollisionPolygon2D" parent="Vertical Shadow/Shadow"]
+process_priority = -1
+
+[node name="Horizontal Shadow" type="Polygon2D" parent="."]
+
+[node name="Shadow" type="Area2D" parent="Horizontal Shadow"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collider" type="CollisionPolygon2D" parent="Horizontal Shadow/Shadow"]
+
+[connection signal="timeout" from="Player/Jump" to="Player" method="_on_jump_timeout"]
