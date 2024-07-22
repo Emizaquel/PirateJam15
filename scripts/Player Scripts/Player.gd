@@ -7,12 +7,17 @@ const JUMP_VELOCITY = -100.0
 @export var jump_timer:Timer
 @export var floor:Area2D
 @export var feet:Area2D
-@export var horizontal_eyes:Array[RayCast2D]
-@export var vertical_eyes:Array[RayCast2D]
+@export var eyes:Array[RayCast2D]
+@onready var day_timer = $"../../Scene Time"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var held:Array[Node2D]
+
+
+func _ready():
+	Eye_Time()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -22,18 +27,25 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _process(_delta):
-	Detect_Sky()
+	Sun_Thing(Detect_Sky())
+	Eye_Time()
 
 func Detect_Sky():
-	for eye in horizontal_eyes:
-		if(eye.get_collider() != null):
-			$"sun sign".visible = false
-			return
-	for eye in vertical_eyes:
-		if(eye.get_collider() != null):
-			$"sun sign".visible = false
-			return
-	$"sun sign".visible = true
+	for eye in eyes:
+		if(eye.get_collider() == null):
+			return true
+	return false
+
+func Sun_Thing(detected:bool):
+	if(detected):
+		$"sun sign".visible = true
+	else:
+		$"sun sign".visible = false
+	
+func Eye_Time():
+	var angle = (day_timer.progress-0.5)*PI
+	for eye in eyes:
+		eye.rotation = angle
 
 func Caclulate_Velocity():
 	var direction = Vector2(Input.get_axis("move_left","move_right"), Input.get_axis("move_up","move_down"))

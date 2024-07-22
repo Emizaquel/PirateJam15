@@ -10,6 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var progress = (0.5 - day_timer.progress)*PI
+	var progress = (1.0 + day_timer.progress)*PI
+	$"..".rotation = progress
 	$"..".skew = 0-progress
 	pass
