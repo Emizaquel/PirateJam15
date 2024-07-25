@@ -11,9 +11,12 @@ config_version=5
 [application]
 
 config/name="PirateJam15"
-run/main_scene="res://scenes/level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/icon.png"
+
+[autoload]
+
+Globals="*res://scripts/Globals/Globals.gd"
 
 [display]
 
@@ -85,6 +88,13 @@ interact={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="World Boundary"
+2d_physics/layer_2="Street Detection"
+2d_physics/layer_3="Floors"
+2d_physics/layer_4="Walls"
 
 [physics]
 

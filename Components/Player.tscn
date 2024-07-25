@@ -1,0 +1,124 @@
+[gd_scene load_steps=6 format=3 uid="uid://blc6o71m2tg2y"]
+
+[ext_resource type="Script" path="res://scripts/Player Scripts/Player.gd" id="1_xk33b"]
+[ext_resource type="Texture2D" uid="uid://dkoruks0qy7xg" path="res://assets/Plague_doc.png" id="2_2apio"]
+[ext_resource type="Script" path="res://scripts/Player Scripts/Player Body.gd" id="2_2feyd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4w64b"]
+radius = 3.5
+height = 23.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_okg8a"]
+a = Vector2(-8, 4)
+b = Vector2(8, 4)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 11
+collision_mask = 11
+script = ExtResource("1_xk33b")
+
+[node name="body" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("2_2feyd")
+
+[node name="Sprite" type="Sprite2D" parent="body"]
+position = Vector2(0, -16)
+texture = ExtResource("2_2apio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="Camera2D" type="Camera2D" parent="body"]
+position_smoothing_enabled = true
+
+[node name="sun sign" type="Polygon2D" parent="body"]
+position = Vector2(0, -13.235)
+color = Color(0.415686, 0, 0, 1)
+polygon = PackedVector2Array(-7, -7, -6, -8, 0, -1, 6, -8, 7, -7, 1, 0, 7, 6, 6, 7, 0, 1, -6, 7, -7, 6, -1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="Eyes" type="Node2D" parent="."]
+visible = false
+
+[node name="RayCast2D" type="RayCast2D" parent="Eyes"]
+position = Vector2(-11, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="Eyes"]
+position = Vector2(-6, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D3" type="RayCast2D" parent="Eyes"]
+position = Vector2(1, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="Eyes"]
+position = Vector2(6, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D5" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -4)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D6" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -9)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D7" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -14)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D8" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -19)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D9" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -24)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D10" type="RayCast2D" parent="Eyes"]
+position = Vector2(0, -29)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="Area2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("SegmentShape2D_okg8a")

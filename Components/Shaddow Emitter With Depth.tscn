@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cu8iyx2wj3n67"]
+
+[ext_resource type="Script" path="res://scripts/Shadow Scripts/Shadow.gd" id="1_jkpvw"]
+[ext_resource type="Shader" path="res://scripts/Shadow Scripts/Shadow.gdshader" id="2_euj73"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vm03"]
+shader = ExtResource("2_euj73")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tl4j8"]
+shader = ExtResource("2_euj73")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nd4wj"]
+shader = ExtResource("2_euj73")
+shader_parameter/shadow_darkness = 0.2
+
+[node name="Shadow Emitter" type="Area2D" node_paths=PackedStringArray("day_timer")]
+position = Vector2(240, 156)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_jkpvw")
+day_timer = NodePath("")
+
+[node name="Collider" type="CollisionPolygon2D" parent="."]
+process_priority = -1
+polygon = PackedVector2Array(-210, -6, 210, -6, 210, 0, -210, 0)
+
+[node name="Vertical Shadow" type="Polygon2D" parent="."]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_4vm03")
+color = Color(0, 0, 0, 0.423529)
+polygon = PackedVector2Array(-210, 0, 210, 0, 210, 600, -210, 600)
+
+[node name="Left Shadow" type="Polygon2D" parent="."]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_tl4j8")
+position = Vector2(-210, -3)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 3, 0, -3, -600, -3, -600, 3)
+
+[node name="Right Shadow" type="Polygon2D" parent="."]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_nd4wj")
+position = Vector2(210, -3)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 3, 0, -3, -600, -3, -600, 3)

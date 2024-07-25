@@ -9,10 +9,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var progress = (1 + day_timer.progress)*PI
+	var progress = (1 + Globals.daytime)*PI
 	$"Left Shadow".rotation = progress
 	$"Left Shadow".skew = 0-progress
 	$"Right Shadow".rotation = $"Left Shadow".rotation
 	$"Right Shadow".skew = $"Left Shadow".skew
-	$"Vertical Shadow".skew = (day_timer.progress - 0.5)*PI
+	$"Vertical Shadow".skew = (Globals.daytime - 0.5)*PI
 	pass

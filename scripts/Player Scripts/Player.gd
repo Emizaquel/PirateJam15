@@ -2,32 +2,26 @@ extends CharacterBody2D
 
 
 const SPEED = 200.0
-const JUMP_VELOCITY = -100.0
-@export var sprite:Sprite2D
-@export var jump_timer:Timer
-@export var floor:Area2D
-@export var feet:Area2D
-@export var eyes:Array[RayCast2D]
-@onready var day_timer = $"../../Scene Time"
+@onready var sprite:Sprite2D = $body/Sprite
+@onready var state_machine = $"State Machine"
+@onready var feet:Area2D = $feet
+@onready var eyes:Array[RayCast2D] = [$Eyes/RayCast2D, $Eyes/RayCast2D2, $Eyes/RayCast2D3, $Eyes/RayCast2D4, $Eyes/RayCast2D5, $Eyes/RayCast2D6, $Eyes/RayCast2D7, $Eyes/RayCast2D8, $Eyes/RayCast2D9, $Eyes/RayCast2D10]
+var floors:StaticBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var held:Array[Node2D]
 
-
 func _ready():
 	Eye_Time()
 
 func _physics_process(delta):
-	# Add the gravity.
 	Caclulate_Velocity()
-	velocity.y += Handle_Jump(delta)
-	
 	move_and_slide()
 
 func _process(_delta):
-	Sun_Thing(Detect_Sky())
+	#Sun_Thing(Detect_Sky())
 	Eye_Time()
 
 func Detect_Sky():
@@ -43,7 +37,7 @@ func Sun_Thing(detected:bool):
 		$"sun sign".visible = false
 	
 func Eye_Time():
-	var angle = (day_timer.progress-0.5)*PI
+	var angle = (Globals.daytime-0.5)*PI
 	for eye in eyes:
 		eye.rotation = angle
 
@@ -60,26 +54,10 @@ func Caclulate_Velocity():
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, 0.2)
 
-var airspeed:float
-var on_ground:bool
-func Handle_Jump(delta):
-	if(Input.is_action_just_pressed("jump") && feet.has_overlapping_areas() && jump_timer.is_stopped()):
-		set_collision_mask_value(2,false)
-		jump_timer.start()
-		airspeed = JUMP_VELOCITY
-		return airspeed
-	if(jump_timer.time_left):
-		airspeed += gravity*delta
-		return airspeed
-	if(feet.has_overlapping_areas()):
-		airspeed = 0.0
-		return 0.0
-	airspeed += gravity*delta
-	return airspeed
-
 func _input(event):
 	if(event.is_action("drop")):
 		Handle_Drop(event)
+
 
 func Handle_Drop(event:InputEvent):
 	if(event.is_pressed()):
@@ -91,3 +69,16 @@ func Handle_Drop(event:InputEvent):
 func _on_jump_timeout():
 	set_collision_mask_value(2,true)
 	pass # Replace with function body.
+
+var front
+var walls
+
+func recieve_floors(new_floors:StaticBody2D):
+	floors = new_floors
+	floors.reparent($".")
+	await get_tree().process_frame
+	floors.position = Vector2.ZERO
+	pass
+
+func return_floors(building:Node2D):
+	floors.reparent(building)
