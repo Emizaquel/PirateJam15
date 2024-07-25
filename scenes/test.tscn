@@ -1,0 +1,402 @@
+[gd_scene load_steps=23 format=3 uid="uid://b2h10s5cfoxc"]
+
+[ext_resource type="Script" path="res://scripts/Shadow Scripts/Shadow.gd" id="1_3h1go"]
+[ext_resource type="Script" path="res://scripts/Player Scripts/Player.gd" id="1_elg3h"]
+[ext_resource type="Texture2D" uid="uid://dkoruks0qy7xg" path="res://assets/Plague_doc.png" id="1_xwsiy"]
+[ext_resource type="Shader" path="res://scripts/Shadow Scripts/Shadow.gdshader" id="2_iay12"]
+[ext_resource type="Script" path="res://scripts/utils/Draggable.gd" id="5_ipuqk"]
+[ext_resource type="Texture2D" uid="uid://duju37oxn3vrw" path="res://assets/crate.png" id="5_xevvo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4vm03"]
+shader = ExtResource("2_iay12")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tl4j8"]
+shader = ExtResource("2_iay12")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nd4wj"]
+shader = ExtResource("2_iay12")
+shader_parameter/shadow_darkness = 0.2
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4w64b"]
+radius = 3.5
+height = 23.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83g5o"]
+radius = 3.0
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0qu1b"]
+radius = 7.0
+height = 36.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x275j"]
+bg_color = Color(0, 0, 0, 0.658824)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ajuxg"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e6efr"]
+normal = Vector2(0, 1)
+distance = -240.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gjwlm"]
+normal = Vector2(-1, 0)
+distance = -240.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_63wdg"]
+normal = Vector2(1, 0)
+distance = -240.0
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_e58l1"]
+a = Vector2(180, 0)
+b = Vector2(-180, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pn18a"]
+a = Vector2(210, 0)
+b = Vector2(-210, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_eurru"]
+a = Vector2(-180, 0)
+b = Vector2(180, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6rnq0"]
+a = Vector2(-154, 0)
+b = Vector2(154, 0)
+
+[sub_resource type="GDScript" id="GDScript_mbwsg"]
+script/source = "extends Timer
+
+var progress:float
+
+func _process(delta):
+	progress = time_left/wait_time
+"
+
+[node name="Test" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.192157, 0, 0.176471, 1)
+
+[node name="street" type="Polygon2D" parent="Background"]
+color = Color(0.326679, 0.326679, 0.326679, 1)
+polygon = PackedVector2Array(0, 270, 60, 208, 420, 208, 480, 270)
+
+[node name="building" type="Polygon2D" parent="Background"]
+color = Color(0.526423, 0.526423, 0.526423, 1)
+polygon = PackedVector2Array(60, 208, 60, 80, 420, 80, 420, 208)
+
+[node name="Balcony" type="Polygon2D" parent="Background"]
+color = Color(0.32549, 0.32549, 0.32549, 1)
+polygon = PackedVector2Array(60, 125, 30, 150, 450, 150, 420, 125)
+
+[node name="Shadow Emitter" type="Area2D" parent="Background" node_paths=PackedStringArray("day_timer")]
+position = Vector2(240, 156)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_3h1go")
+day_timer = NodePath("../../Scene Time")
+
+[node name="Collider" type="CollisionPolygon2D" parent="Background/Shadow Emitter"]
+process_priority = -1
+polygon = PackedVector2Array(-210, -6, 210, -6, 210, 0, -210, 0)
+
+[node name="Vertical Shadow" type="Polygon2D" parent="Background/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_4vm03")
+color = Color(0, 0, 0, 0.423529)
+polygon = PackedVector2Array(-210, 0, 210, 0, 210, 600, -210, 600)
+
+[node name="Left Shadow" type="Polygon2D" parent="Background/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_tl4j8")
+position = Vector2(-210, -3)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 3, 0, -3, -600, -3, -600, 3)
+
+[node name="Right Shadow" type="Polygon2D" parent="Background/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_nd4wj")
+position = Vector2(210, -3)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 3, 0, -3, -600, -3, -600, 3)
+
+[node name="Balcony Edge" type="Polygon2D" parent="Background"]
+color = Color(0.82606, 0.82606, 0.82606, 1)
+polygon = PackedVector2Array(30, 150, 30, 156, 450, 156, 450, 150)
+
+[node name="roof" type="Polygon2D" parent="Background"]
+color = Color(0.32549, 0.32549, 0.32549, 1)
+polygon = PackedVector2Array(60, 80, 90, 64, 390, 64, 420, 80)
+
+[node name="Sprites" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" type="CharacterBody2D" parent="Sprites" node_paths=PackedStringArray("sprite", "jump_timer", "floor", "feet", "eyes")]
+position = Vector2(260, 232)
+collision_layer = 256
+collision_mask = 7
+script = ExtResource("1_elg3h")
+sprite = NodePath("Sprite")
+jump_timer = NodePath("Jump")
+floor = NodePath("../../Floor")
+feet = NodePath("feet")
+eyes = [NodePath("Eyes/RayCast2D"), NodePath("Eyes/RayCast2D2"), NodePath("Eyes/RayCast2D3"), NodePath("Eyes/RayCast2D4"), NodePath("Eyes/RayCast2D5"), NodePath("Eyes/RayCast2D6"), NodePath("Eyes/RayCast2D7"), NodePath("Eyes/RayCast2D8"), NodePath("Eyes/RayCast2D9"), NodePath("Eyes/RayCast2D10")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Player"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="Jump" type="Timer" parent="Sprites/Player"]
+one_shot = true
+
+[node name="Sprite" type="Sprite2D" parent="Sprites/Player"]
+position = Vector2(0, -16)
+texture = ExtResource("1_xwsiy")
+
+[node name="feet" type="Area2D" parent="Sprites/Player"]
+collision_layer = 0
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Player/feet"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="sun sign" type="Polygon2D" parent="Sprites/Player"]
+position = Vector2(0, -13.235)
+color = Color(0.415686, 0, 0, 1)
+polygon = PackedVector2Array(-7, -7, -6, -8, 0, -1, 6, -8, 7, -7, 1, 0, 7, 6, 6, 7, 0, 1, -6, 7, -7, 6, -1, 0)
+
+[node name="Eyes" type="Node2D" parent="Sprites/Player"]
+
+[node name="RayCast2D" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(-11, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(-6, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D3" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(1, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(6, 0)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D5" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -4)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D6" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -9)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D7" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -14)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D8" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -19)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D9" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -24)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="RayCast2D10" type="RayCast2D" parent="Sprites/Player/Eyes"]
+position = Vector2(0, -29)
+rotation = 1.5708
+target_position = Vector2(0, -500)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="Crate" type="CharacterBody2D" parent="Sprites"]
+position = Vector2(198, 227)
+script = ExtResource("5_ipuqk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Crate"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_83g5o")
+
+[node name="Area2D" type="Area2D" parent="Sprites/Crate"]
+collision_layer = 0
+collision_mask = 264
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Crate/Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0qu1b")
+
+[node name="Shadow Emitter" type="Area2D" parent="Sprites/Crate" node_paths=PackedStringArray("day_timer")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_3h1go")
+day_timer = NodePath("../../../Scene Time")
+
+[node name="Collider" type="CollisionPolygon2D" parent="Sprites/Crate/Shadow Emitter"]
+process_priority = -1
+position = Vector2(0, -4)
+polygon = PackedVector2Array(-11, -10, 11, -10, 11, 4, -11, 4)
+
+[node name="Vertical Shadow" type="Polygon2D" parent="Sprites/Crate/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_4vm03")
+color = Color(0, 0, 0, 0.423529)
+polygon = PackedVector2Array(-11, 0, 11, 0, 11, 600, -11, 600)
+
+[node name="Left Shadow" type="Polygon2D" parent="Sprites/Crate/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_tl4j8")
+position = Vector2(-11, -5)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 5, 0, -5, -600, -5, -600, 5)
+
+[node name="Right Shadow" type="Polygon2D" parent="Sprites/Crate/Shadow Emitter"]
+visibility_layer = 2
+material = SubResource("ShaderMaterial_nd4wj")
+position = Vector2(11, -5)
+color = Color(0, 0, 0, 0.321569)
+polygon = PackedVector2Array(0, 5, 0, -5, -600, -5, -600, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprites/Crate"]
+position = Vector2(0, -16)
+texture = ExtResource("5_xevvo")
+
+[node name="Label" type="Label" parent="Sprites/Crate"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -60.0
+offset_right = 63.5
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_x275j")
+text = "Press X to Move"
+
+[node name="World Bottom" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(242, 271)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World Bottom"]
+shape = SubResource("WorldBoundaryShape2D_ajuxg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(0, -31)
+shape = SubResource("WorldBoundaryShape2D_e6efr")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(-1, -119)
+shape = SubResource("WorldBoundaryShape2D_gjwlm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="World Bottom"]
+position = Vector2(0, -117)
+shape = SubResource("WorldBoundaryShape2D_63wdg")
+
+[node name="Passable Floors" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(240, 151)
+collision_layer = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Passable Floors"]
+position = Vector2(0, -71)
+shape = SubResource("SegmentShape2D_e58l1")
+one_way_collision = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passable Floors"]
+shape = SubResource("SegmentShape2D_pn18a")
+one_way_collision = true
+
+[node name="Jump Boundary" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(240, 208)
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Jump Boundary"]
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_eurru")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Jump Boundary"]
+position = Vector2(0, -83)
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_eurru")
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Jump Boundary"]
+position = Vector2(0, -144)
+rotation = -3.14159
+shape = SubResource("SegmentShape2D_6rnq0")
+one_way_collision = true
+
+[node name="Floor" type="Area2D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(0, 270, 0, 208, 480, 208, 480, 270)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(60, 125, 30, 150, 450, 150, 420, 125)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Floor"]
+polygon = PackedVector2Array(60, 80, 90, 64, 390, 64, 420, 80)
+
+[node name="Scene Time" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+script = SubResource("GDScript_mbwsg")
+
+[connection signal="timeout" from="Sprites/Player/Jump" to="Sprites/Player" method="_on_jump_timeout"]
+[connection signal="body_entered" from="Sprites/Crate/Area2D" to="Sprites/Crate" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Sprites/Crate/Area2D" to="Sprites/Crate" method="_on_area_2d_body_exited"]
