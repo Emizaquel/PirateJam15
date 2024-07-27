@@ -1,5 +1,6 @@
 extends Area2D
 
+@onready var floors = $Floors
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,13 +13,14 @@ func _process(delta):
 
 func _on_body_entered(body:Node2D):
 	if(body.has_method("recieve_floors")):
-		$"../Floors".set_collision_layer_value(3,true)
-		body.call("recieve_floors",$"../Floors")
+		floors.set_collision_layer_value(3,true)
+		floors.reparent(body)
+		await get_tree().process_frame
+		floors.position = Vector2.ZERO
 
 
 func _on_body_exited(body):
-	if(body.has_method("return_floors")):
-		body.call("return_floors",$"..")
-	await get_tree().process_frame
-	$"../Floors".set_collision_layer_value(3,false)
-	$"../Floors".position = Vector2.ZERO
+	if(body.has_method("recieve_floors")):
+		floors.reparent($'.')
+		await get_tree().process_frame
+		floors.set_collision_layer_value(3,false)

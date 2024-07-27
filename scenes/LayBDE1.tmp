@@ -1,11 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1ik27n60bxc2"]
+[gd_scene load_steps=27 format=3 uid="uid://d1ik27n60bxc2"]
 
 [ext_resource type="Script" path="res://scripts/utils/Map_Handler.gd" id="1_lu411"]
 [ext_resource type="PackedScene" uid="uid://blc6o71m2tg2y" path="res://Components/Player.tscn" id="2_82aat"]
 [ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_c3l83"]
 [ext_resource type="Script" path="res://scripts/utils/bulk.gd" id="3_wrwy3"]
 [ext_resource type="Texture2D" uid="uid://duju37oxn3vrw" path="res://assets/crate.png" id="7_dr21o"]
+[ext_resource type="PackedScene" uid="uid://dhbmrgls6wljy" path="res://Components/building footprint.tscn" id="7_f1jpq"]
+[ext_resource type="Shader" path="res://scripts/shaders/shadow.gdshader" id="8_ukn1p"]
 [ext_resource type="Script" path="res://scripts/utils/Platform.gd" id="8_uxupk"]
+[ext_resource type="Script" path="res://scripts/utils/Shadow.gd" id="9_88iaf"]
+[ext_resource type="Script" path="res://scripts/utils/Side Shadow.gd" id="9_vo81o"]
+[ext_resource type="Script" path="res://scripts/utils/Bottom Shadow.gd" id="10_mq4ip"]
+[ext_resource type="Script" path="res://scripts/utils/Building.gd" id="13_e7ahp"]
 [ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="13_msmdg"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eidg6"]
@@ -35,6 +41,20 @@ b = Vector2(8, -149)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_66320"]
 size = Vector2(20, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu4el"]
+size = Vector2(28, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l7so"]
+size = Vector2(28, 8)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ebc3x"]
+a = Vector2(-4, -25)
+b = Vector2(4, -25)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6sy1"]
+shader = ExtResource("8_ukn1p")
+shader_parameter/shadow_darkness = 0.6
 
 [node name="LayeredTest" type="Node2D"]
 y_sort_enabled = true
@@ -279,21 +299,86 @@ one_way_collision = true
 [node name="Player" parent="." instance=ExtResource("2_82aat")]
 position = Vector2(267, 246)
 
-[node name="Crate" parent="." instance=ExtResource("13_msmdg")]
-position = Vector2(374, 188)
+[node name="Crate" type="Node2D" parent="."]
+position = Vector2(334, 207)
+script = ExtResource("13_e7ahp")
 height = 25.0
 width = 28.0
 depth = 8.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Crate"]
+[node name="footprint" parent="Crate" instance=ExtResource("7_f1jpq")]
+position = Vector2(1, 4)
+
+[node name="Shape" type="CollisionShape2D" parent="Crate/footprint"]
+shape = SubResource("RectangleShape2D_bu4el")
+
+[node name="Platform" type="Area2D" parent="Crate"]
+visible = false
+position = Vector2(0, 8)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("8_uxupk")
+
+[node name="Shape" type="CollisionShape2D" parent="Crate/Platform"]
+position = Vector2(1, -4)
+shape = SubResource("RectangleShape2D_6l7so")
+
+[node name="Floors" type="StaticBody2D" parent="Crate/Platform"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Crate/Platform/Floors"]
+shape = SubResource("SegmentShape2D_ebc3x")
+
+[node name="graphics" type="Node2D" parent="Crate"]
+
+[node name="Side Shadow" type="Polygon2D" parent="Crate/graphics"]
+material = SubResource("ShaderMaterial_f6sy1")
+position = Vector2(-13, 4)
+color = Color(0, 0, 0, 0.784314)
+polygon = PackedVector2Array(0, -4, 0, 4, 28, 4, 28, -4)
+script = ExtResource("9_vo81o")
+
+[node name="Shadow" type="Area2D" parent="Crate/graphics/Side Shadow"]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("9_88iaf")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Crate/graphics/Side Shadow/Shadow"]
+
+[node name="Side Shadow2" type="Polygon2D" parent="Crate/graphics"]
+material = SubResource("ShaderMaterial_f6sy1")
+position = Vector2(15, 4)
+color = Color(0, 0, 0, 0.784314)
+polygon = PackedVector2Array(0, -4, 0, 4, 28, 4, 28, -4)
+script = ExtResource("9_vo81o")
+
+[node name="Shadow" type="Area2D" parent="Crate/graphics/Side Shadow2"]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("9_88iaf")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Crate/graphics/Side Shadow2/Shadow"]
+
+[node name="Bottom Shadow" type="Polygon2D" parent="Crate/graphics"]
+material = SubResource("ShaderMaterial_f6sy1")
+position = Vector2(1, 8)
+color = Color(0, 0, 0, 0.784314)
+polygon = PackedVector2Array(-14, 0, 14, 0, 14, 28, -14, 28)
+script = ExtResource("10_mq4ip")
+
+[node name="Shadow" type="Area2D" parent="Crate/graphics/Bottom Shadow"]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("9_88iaf")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Crate/graphics/Bottom Shadow/Shadow"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Crate/graphics"]
 position = Vector2(0, -16)
 texture = ExtResource("7_dr21o")
 
 [node name="Building" parent="." instance=ExtResource("13_msmdg")]
-position = Vector2(114, 193)
-height = 25.0
-width = 80.0
-depth = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="Building"]
 anchors_preset = 5
@@ -328,3 +413,5 @@ color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
 [connection signal="body_exited" from="Building2/Platform" to="Building2/Platform" method="_on_body_exited"]
 [connection signal="body_entered" from="Building2/Platform2" to="Building2/Platform2" method="_on_body_entered"]
 [connection signal="body_exited" from="Building2/Platform2" to="Building2/Platform2" method="_on_body_exited"]
+[connection signal="body_entered" from="Crate/Platform" to="Crate/Platform" method="_on_body_entered"]
+[connection signal="body_exited" from="Crate/Platform" to="Crate/Platform" method="_on_body_exited"]

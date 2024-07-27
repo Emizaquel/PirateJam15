@@ -3,18 +3,41 @@ extends Node
 var daytimer:Timer
 var daytime:float
 
+var money:float = 10.0
+var health:float = 0.5
+var pos_set:bool = false
+var player_pos:Vector2 = Vector2.ZERO
+var player_bodiez:float = 0.0
+var player:CharacterBody2D
+var looted:Array = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SaveFile.load()
+	print(Globals.looted)
+	print(Globals.looted.find("test_lootable_crate"))
 	daytimer = Timer.new()
 	daytimer.name = "daytimer"
-	daytimer.set_wait_time(600.0)
+	daytimer.set_wait_time(60.0)
 	add_child(daytimer)
 	await get_tree().process_frame
 	daytimer.start()
 	pass # Replace with function body.
 
+func load_player(p:CharacterBody2D):
+	player = p
+	if(pos_set):
+		player.global_position = player_pos
+		pos_set = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	daytime = daytimer.time_left/daytimer.wait_time
+	daytime = (daytimer.time_left/daytimer.wait_time)*0.6+0.2
+	if(health < 1.0):
+		health += 0.2*delta
+		if(health > 1.0):
+			health = 1.0
 	pass
+
+func save():
+	SaveFile.new().save()

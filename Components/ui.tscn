@@ -1,0 +1,172 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl50fx1d6q337"]
+
+[ext_resource type="Script" path="res://scripts/utils/UI.gd" id="1_mvy54"]
+[ext_resource type="Texture2D" uid="uid://0llaukmc645w" path="res://assets/health bar.png" id="2_15rhc"]
+
+[node name="UI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_mvy54")
+
+[node name="Margins" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Health" type="Node2D" parent="Margins"]
+position = Vector2(5, 5)
+
+[node name="Clip" type="Polygon2D" parent="Margins/Health"]
+clip_children = 1
+position = Vector2(19, 12)
+color = Color(0.262745, 0.27451, 0.262745, 1)
+polygon = PackedVector2Array(1, -2, 2, -4, 4, -6, 6, -7, 46, -7, 48, -6, 50, -4, 51, -2, 51, 2, 50, 4, 48, 6, 46, 7, 6, 7, 4, 6, 2, 4, 1, 2)
+
+[node name="Background" type="ColorRect" parent="Margins/Health/Clip"]
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 51.0
+offset_bottom = 7.0
+color = Color(0.262745, 0.27451, 0.262745, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Health Bar" type="ColorRect" parent="Margins/Health/Clip"]
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 51.0
+offset_bottom = 7.0
+color = Color(0.65098, 0.129412, 0.345098, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Frame" type="Sprite2D" parent="Margins/Health"]
+position = Vector2(45, 12)
+texture = ExtResource("2_15rhc")
+
+[node name="Inventory" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Inventory"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.760784)
+
+[node name="MarginContainer2" type="MarginContainer" parent="Inventory/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="Inventory/ColorRect/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "INVENTORY"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/ColorRect/MarginContainer2"]
+custom_minimum_size = Vector2(0, 222.97)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+follow_focus = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+columns = 3
+
+[node name="Button" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button5" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button6" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button8" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button9" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button10" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button11" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button12" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button13" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button14" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button15" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="Button16" type="Button" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer/ScrollContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(90, 100)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(161.415, 0)
+layout_mode = 2

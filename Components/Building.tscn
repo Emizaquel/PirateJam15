@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://c51as2axcadse"]
+
+[ext_resource type="Script" path="res://scripts/utils/Building.gd" id="1_btwdn"]
+[ext_resource type="PackedScene" uid="uid://dhbmrgls6wljy" path="res://Components/building footprint.tscn" id="2_tlxen"]
+[ext_resource type="Script" path="res://scripts/utils/Platform.gd" id="3_7y1qm"]
+[ext_resource type="Shader" path="res://scripts/shaders/shadow.gdshader" id="4_blhoi"]
+[ext_resource type="Script" path="res://scripts/utils/Side Shadow.gd" id="5_o48cp"]
+[ext_resource type="Script" path="res://scripts/utils/Shadow.gd" id="6_pma7x"]
+[ext_resource type="Script" path="res://scripts/utils/Bottom Shadow.gd" id="7_l4nug"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_300po"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7g7q"]
+size = Vector2(1, 1)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ebc3x"]
+a = Vector2(-4, -25)
+b = Vector2(4, -25)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6sy1"]
+shader = ExtResource("4_blhoi")
+shader_parameter/shadow_darkness = 0.6
+
+[node name="Building" type="Node2D"]
+script = ExtResource("1_btwdn")
+
+[node name="footprint" parent="." instance=ExtResource("2_tlxen")]
+
+[node name="Shape" type="CollisionShape2D" parent="footprint"]
+shape = SubResource("RectangleShape2D_300po")
+
+[node name="Platform" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_7y1qm")
+
+[node name="Shape" type="CollisionShape2D" parent="Platform"]
+shape = SubResource("RectangleShape2D_r7g7q")
+
+[node name="Floors" type="StaticBody2D" parent="Platform"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Platform/Floors"]
+shape = SubResource("SegmentShape2D_ebc3x")
+
+[node name="Side Shadow" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_f6sy1")
+color = Color(0, 0, 0, 0.784314)
+script = ExtResource("5_o48cp")
+
+[node name="Shadow" type="Area2D" parent="Side Shadow"]
+visible = false
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("6_pma7x")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Side Shadow/Shadow"]
+
+[node name="Side Shadow2" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_f6sy1")
+color = Color(0, 0, 0, 0.784314)
+script = ExtResource("5_o48cp")
+
+[node name="Shadow" type="Area2D" parent="Side Shadow2"]
+visible = false
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("6_pma7x")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Side Shadow2/Shadow"]
+
+[node name="Bottom Shadow" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_f6sy1")
+color = Color(0, 0, 0, 0.784314)
+script = ExtResource("7_l4nug")
+
+[node name="Shadow" type="Area2D" parent="Bottom Shadow"]
+visible = false
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("6_pma7x")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Bottom Shadow/Shadow"]
+
+[connection signal="body_entered" from="Platform" to="Platform" method="_on_body_entered"]
+[connection signal="body_exited" from="Platform" to="Platform" method="_on_body_exited"]

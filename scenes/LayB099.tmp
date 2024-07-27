@@ -1,0 +1,319 @@
+[gd_scene load_steps=15 format=3 uid="uid://d1ik27n60bxc2"]
+
+[ext_resource type="Script" path="res://scripts/utils/street.gd" id="1_f1jgv"]
+[ext_resource type="Script" path="res://scripts/utils/Map_Handler.gd" id="1_lu411"]
+[ext_resource type="PackedScene" uid="uid://blc6o71m2tg2y" path="res://Components/Player.tscn" id="2_82aat"]
+[ext_resource type="Script" path="res://scripts/utils/UI.gd" id="2_ffeit"]
+[ext_resource type="Script" path="res://scripts/utils/over_building.gd" id="3_5aqg4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eidg6"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uoufp"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bkkay"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k1trj"]
+normal = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwjm0"]
+size = Vector2(110.625, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1u338"]
+size = Vector2(120, 28)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pnb1k"]
+a = Vector2(-8, 0)
+b = Vector2(8, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_1rwtq"]
+a = Vector2(-8, 0)
+b = Vector2(8, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5x6a"]
+size = Vector2(130, 35)
+
+[node name="LayeredTest" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lu411")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.116035, 0.000175003, 0.29312, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("2_ffeit")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Health"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Money" type="Label" parent="UI/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="Label2" type="Label" parent="UI/MarginContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = " : Money"
+
+[node name="Inventory" type="MarginContainer" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="UI/Inventory"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.760784)
+
+[node name="MarginContainer2" type="MarginContainer" parent="UI/Inventory/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Inventory/ColorRect/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Inventory/ColorRect/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "INVENTORY"
+
+[node name="Street" type="Node2D" parent="."]
+
+[node name="Polygon2D7" type="Polygon2D" parent="Street"]
+position = Vector2(0, 177)
+color = Color(0.582376, 0.582376, 0.582376, 1)
+polygon = PackedVector2Array(0, 0, 480, 0, 480, 95, 0, 95)
+
+[node name="Polygon2D8" type="Polygon2D" parent="Street"]
+position = Vector2(-480, 0)
+color = Color(0.0431373, 0, 0.152941, 1)
+polygon = PackedVector2Array(0, 0, 480, 0, 480, 300, 0, 300)
+
+[node name="Polygon2D9" type="Polygon2D" parent="Street"]
+position = Vector2(481, 0)
+color = Color(0.0431373, 0, 0.152941, 1)
+polygon = PackedVector2Array(0, 0, 480, 0, 480, 300, 0, 300)
+
+[node name="World Boundary" type="StaticBody2D" parent="Street"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Street/World Boundary"]
+position = Vector2(0, 272)
+shape = SubResource("WorldBoundaryShape2D_eidg6")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Street/World Boundary"]
+position = Vector2(480, 0)
+shape = SubResource("WorldBoundaryShape2D_uoufp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Street/World Boundary"]
+shape = SubResource("WorldBoundaryShape2D_bkkay")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Street/World Boundary"]
+position = Vector2(5, 177)
+shape = SubResource("WorldBoundaryShape2D_k1trj")
+
+[node name="Back Area" type="Node2D" parent="."]
+position = Vector2(356, 219)
+
+[node name="Art" type="Node2D" parent="Back Area"]
+position = Vector2(-356, -210)
+
+[node name="Polygon2D" type="Polygon2D" parent="Back Area/Art"]
+position = Vector2(296, 30)
+color = Color(0.245984, 0.245984, 0.245984, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 180, 0, 180)
+
+[node name="Polygon2D3" type="Polygon2D" parent="Back Area/Art"]
+position = Vector2(296, 30)
+color = Color(0.582376, 0.582376, 0.582376, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Back Area/Art"]
+position = Vector2(296, 112)
+color = Color(0.582376, 0.582376, 0.582376, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
+
+[node name="Polygon2D4" type="Polygon2D" parent="Back Area/Art"]
+position = Vector2(296, 60)
+color = Color(0.15967, 0.15967, 0.15967, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
+
+[node name="Polygon2D5" type="Polygon2D" parent="Back Area/Art"]
+position = Vector2(296, 142)
+color = Color(0.15967, 0.15967, 0.15967, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
+
+[node name="street" type="Area2D" parent="Back Area"]
+position = Vector2(0, 14)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_f1jgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back Area/street"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_mwjm0")
+
+[node name="Base" type="StaticBody2D" parent="Back Area"]
+position = Vector2(0, -14)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back Area/Base"]
+shape = SubResource("RectangleShape2D_1u338")
+
+[node name="Floors" type="StaticBody2D" parent="Back Area"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back Area/Floors"]
+position = Vector2(0, -98)
+shape = SubResource("SegmentShape2D_pnb1k")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Back Area/Floors"]
+position = Vector2(0, -180)
+shape = SubResource("SegmentShape2D_1rwtq")
+one_way_collision = true
+
+[node name="over" type="Area2D" parent="Back Area"]
+position = Vector2(0, -14)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_5aqg4")
+building_height = -180.0
+width = 50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back Area/over"]
+shape = SubResource("RectangleShape2D_w5x6a")
+
+[node name="Forward Area" type="Node2D" parent="."]
+position = Vector2(160, 240)
+
+[node name="Art" type="Node2D" parent="Forward Area"]
+position = Vector2(-160, -240)
+
+[node name="Polygon2D" type="Polygon2D" parent="Forward Area/Art"]
+position = Vector2(100, 60)
+color = Color(0.245984, 0.245984, 0.245984, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 180, 0, 180)
+
+[node name="Polygon2D3" type="Polygon2D" parent="Forward Area/Art"]
+position = Vector2(100, 60)
+color = Color(0.582376, 0.582376, 0.582376, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Forward Area/Art"]
+position = Vector2(100, 142)
+color = Color(0.582376, 0.582376, 0.582376, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
+
+[node name="Polygon2D4" type="Polygon2D" parent="Forward Area/Art"]
+position = Vector2(100, 90)
+color = Color(0.15967, 0.15967, 0.15967, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
+
+[node name="Polygon2D5" type="Polygon2D" parent="Forward Area/Art"]
+position = Vector2(100, 172)
+color = Color(0.15967, 0.15967, 0.15967, 1)
+polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
+
+[node name="street" type="Area2D" parent="Forward Area"]
+position = Vector2(0, 14)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_f1jgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Forward Area/street"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_mwjm0")
+
+[node name="Base" type="StaticBody2D" parent="Forward Area"]
+position = Vector2(0, -14)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Forward Area/Base"]
+shape = SubResource("RectangleShape2D_1u338")
+
+[node name="Floors" type="StaticBody2D" parent="Forward Area"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Forward Area/Floors"]
+position = Vector2(0, -98)
+shape = SubResource("SegmentShape2D_pnb1k")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Forward Area/Floors"]
+position = Vector2(0, -180)
+shape = SubResource("SegmentShape2D_1rwtq")
+one_way_collision = true
+
+[node name="over" type="Area2D" parent="Forward Area"]
+position = Vector2(0, -14)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_5aqg4")
+building_height = -180.0
+width = 50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Forward Area/over"]
+shape = SubResource("RectangleShape2D_w5x6a")
+
+[node name="Player" parent="." instance=ExtResource("2_82aat")]
+position = Vector2(260, 251)
+
+[connection signal="body_entered" from="Back Area/street" to="Back Area/street" method="_on_body_entered"]
+[connection signal="body_exited" from="Back Area/street" to="Back Area/street" method="_on_body_exited"]
+[connection signal="body_entered" from="Back Area/over" to="Back Area/over" method="_on_body_entered"]
+[connection signal="body_exited" from="Back Area/over" to="Back Area/over" method="_on_body_exited"]
+[connection signal="body_entered" from="Forward Area/street" to="Forward Area/street" method="_on_body_entered"]
+[connection signal="body_exited" from="Forward Area/street" to="Forward Area/street" method="_on_body_exited"]
+[connection signal="body_entered" from="Forward Area/over" to="Forward Area/over" method="_on_body_entered"]
+[connection signal="body_exited" from="Forward Area/over" to="Forward Area/over" method="_on_body_exited"]
