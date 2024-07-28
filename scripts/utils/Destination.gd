@@ -14,6 +14,7 @@ func _process(delta):
 
 
 func _on_timer_timeout():
+	Globals.saved_data["last_scene"] = new_scene
 	get_tree().change_scene_to_file(new_scene)
 	$"../UI".show_screen = true
 	Globals.save()

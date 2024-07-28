@@ -19,8 +19,8 @@ func _ready():
 func _physics_process(delta):
 	Caclulate_Velocity()
 	move_and_slide()
-	if(moving && !$steps.playing):
-		$steps.play()
+	#if(moving && !$steps.playing):
+		#$steps.play()
 
 func _process(_delta):
 	pass

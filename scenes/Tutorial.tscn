@@ -22,7 +22,10 @@ distance = -45.0
 y_sort_enabled = true
 position = Vector2(1, 0)
 
+[node name="UI" parent="." instance=ExtResource("2_ae1pp")]
+
 [node name="World Boundary" type="StaticBody2D" parent="."]
+position = Vector2(59, 339)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World Boundary"]
@@ -41,12 +44,10 @@ position = Vector2(251, 172)
 shape = SubResource("WorldBoundaryShape2D_rnsrm")
 
 [node name="Player" parent="." instance=ExtResource("1_35b6i")]
-position = Vector2(105, 244)
-
-[node name="UI" parent="." instance=ExtResource("2_ae1pp")]
+position = Vector2(164, 583)
 
 [node name="Building" parent="." instance=ExtResource("3_0hpg8")]
-position = Vector2(114, 193)
+position = Vector2(173, 532)
 height = 25.0
 width = 80.0
 depth = 40.0
@@ -73,7 +74,7 @@ grow_horizontal = 2
 color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
 
 [node name="Flat" parent="." instance=ExtResource("4_i4vl8")]
-position = Vector2(204, 127)
+position = Vector2(263, 466)
 height = 80.0
 width = 200.0
 
@@ -91,7 +92,7 @@ grow_vertical = 0
 color = Color(0, 0.329412, 0, 1)
 
 [node name="Building2" parent="." instance=ExtResource("3_0hpg8")]
-position = Vector2(353, 120)
+position = Vector2(412, 459)
 height = 60.0
 width = 100.0
 depth = 40.0
@@ -104,4 +105,5 @@ offset_bottom = 40.0
 color = Color(0.236334, 0.236334, 0.236334, 1)
 
 [node name="Destination" parent="." instance=ExtResource("5_n1n0e")]
+position = Vector2(411, 509)
 new_scene = "res://scenes/Lair.tscn"

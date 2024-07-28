@@ -27,8 +27,8 @@ func _physics_process(delta):
 		return
 	Caclulate_Velocity()
 	move_and_slide()
-	if(moving && !$"Steps Dirt".playing):
-		$"Steps Dirt".play()
+	#if(moving && !$"Steps Dirt".playing):
+		#$"Steps Dirt".play()
 
 func Detect_Sky():
 	var shadows:Array = $"True Shadow".get_overlapping_areas()

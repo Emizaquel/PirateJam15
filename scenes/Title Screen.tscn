@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4hipqpkrtoma"]
+
+[ext_resource type="Script" path="res://scripts/utils/Title Screen.gd" id="1_1bths"]
+[ext_resource type="AudioStream" uid="uid://jvetmce8ahqg" path="res://Sounds/Soundtrack - Title Theme.wav" id="2_f0g7k"]
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_1bths")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ColorRect/CenterContainer"]
+layout_mode = 2
+
+[node name="Replace with logo" type="ColorRect" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Game Start" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="Controls" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_f0g7k")
+volume_db = -4.935
+autoplay = true
+
+[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/Game Start" to="." method="_on_game_start_pressed"]

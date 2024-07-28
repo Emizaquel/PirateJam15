@@ -1,27 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://dkmkrs7hwgxt5"]
+[gd_scene load_steps=27 format=3 uid="uid://dkmkrs7hwgxt5"]
 
 [ext_resource type="Script" path="res://scripts/Player Scripts/Player Night.gd" id="1_fx2ra"]
-[ext_resource type="AudioStream" uid="uid://dqsggybrxbhu3" path="res://Sounds/Steps brick alt 1.wav" id="2_h8v4m"]
-[ext_resource type="AudioStream" uid="uid://bjvud6ccrklvi" path="res://Sounds/Steps brick alt 2.wav" id="3_in44p"]
-[ext_resource type="AudioStream" uid="uid://qhkiinoh7kwg" path="res://Sounds/Steps brick alt 3.wav" id="4_8aylg"]
-[ext_resource type="AudioStream" uid="uid://bonuvoskkuh3k" path="res://Sounds/Steps brick alt 4.wav" id="5_c17wq"]
 [ext_resource type="AudioStream" uid="uid://dyur5orw1xkhn" path="res://Sounds/Night Time.wav" id="6_bg3rb"]
 [ext_resource type="Script" path="res://scripts/Player Scripts/Player Body.gd" id="6_utp7p"]
+[ext_resource type="PackedScene" uid="uid://d2u2q6y5dspji" path="res://Components/step sounds.tscn" id="6_v7r74"]
 [ext_resource type="Texture2D" uid="uid://4f7tie855715" path="res://assets/shadow.png" id="7_3acsx"]
 [ext_resource type="Texture2D" uid="uid://sjw0qierih4h" path="res://assets/Plague_doc_frames.png" id="8_ob5bn"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xcg2o"]
-random_pitch = 1.2
-random_volume_offset_db = 3.0
-streams_count = 4
-stream_0/stream = ExtResource("2_h8v4m")
-stream_0/weight = 1.0
-stream_1/stream = ExtResource("3_in44p")
-stream_1/weight = 1.0
-stream_2/stream = ExtResource("4_8aylg")
-stream_2/weight = 1.0
-stream_3/stream = ExtResource("5_c17wq")
-stream_3/weight = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_povc4"]
 atlas = ExtResource("8_ob5bn")
@@ -189,14 +173,6 @@ collision_layer = 11
 collision_mask = 11
 script = ExtResource("1_fx2ra")
 
-[node name="steps" type="AudioStreamPlayer2D" parent="."]
-stream = SubResource("AudioStreamRandomizer_xcg2o")
-
-[node name="Night Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_bg3rb")
-volume_db = -10.0
-autoplay = true
-
 [node name="body" type="CharacterBody2D" parent="."]
 process_priority = -1
 collision_layer = 65540
@@ -250,3 +226,10 @@ collision_mask = 256
 [node name="CollisionShape2D" type="CollisionShape2D" parent="True Shadow"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4w64b")
+
+[node name="Night Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bg3rb")
+volume_db = -10.0
+autoplay = true
+
+[node name="Steps" parent="." instance=ExtResource("6_v7r74")]
