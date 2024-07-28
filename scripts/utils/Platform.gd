@@ -1,9 +1,15 @@
 extends Area2D
 
 @onready var floors = $Floors
+@onready var floor_shape = $Floors/Shape
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var new_floor = SegmentShape2D.new()
+	var clearance = $"..".height + $"..".z_pos
+	new_floor.a = Vector2(-4,-clearance)
+	new_floor.b = Vector2(4,-clearance)
+	floor_shape.shape = new_floor
 	pass # Replace with function body.
 
 

@@ -4,7 +4,7 @@ var daytimer:Timer
 var daytime:float
 
 var money:float = 10.0
-var health:float = 0.5
+var health:float = 1.0
 var pos_set:bool = false
 var player_pos:Vector2 = Vector2.ZERO
 var player_bodiez:float = 0.0
@@ -34,7 +34,7 @@ func load_player(p:CharacterBody2D):
 func _process(delta):
 	daytime = (daytimer.time_left/daytimer.wait_time)*0.6+0.2
 	if(health < 1.0):
-		health += 0.2*delta
+		health += 0.1*delta
 		if(health > 1.0):
 			health = 1.0
 	pass

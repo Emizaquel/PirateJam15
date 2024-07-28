@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dg0mpuaj72de7"
+path="res://.godot/imported/End pushing objects.wav-2a048352618f030f7df938507f7db530.sample"
+
+[deps]
+
+source_file="res://Sounds/End pushing objects.wav"
+dest_files=["res://.godot/imported/End pushing objects.wav-2a048352618f030f7df938507f7db530.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

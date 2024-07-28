@@ -6,6 +6,7 @@ const SPEED = 200.0
 @onready var state_machine = $"State Machine"
 @onready var feet:Area2D = $feet
 var floors:StaticBody2D
+var moving = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -18,9 +19,11 @@ func _ready():
 func _physics_process(delta):
 	Caclulate_Velocity()
 	move_and_slide()
+	if(moving && !$steps.playing):
+		$steps.play()
 
 func _process(_delta):
-	$"body/sun sign".visible = !Detect_Sky()
+	pass
 
 func Detect_Sky():
 	return $"True Shadow".has_overlapping_areas()
@@ -38,6 +41,7 @@ func Caclulate_Velocity():
 			else:
 				if(sprite.animation_finished):
 					sprite.play("Run")
+					moving = true
 		direction = direction.normalized()*SPEED
 		direction.y *= 0.5
 		velocity = velocity.lerp(direction, 0.2)
@@ -47,6 +51,7 @@ func Caclulate_Velocity():
 				sprite.play_backwards("Run Start")
 			else:
 				if(sprite.animation_finished):
+					moving = false
 					sprite.play("Stand")
 		velocity = velocity.lerp(Vector2.ZERO, 0.2)
 

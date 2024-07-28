@@ -170,3 +170,31 @@ layout_mode = 2
 [node name="MarginContainer" type="MarginContainer" parent="Inventory/ColorRect/MarginContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(161.415, 0)
 layout_mode = 2
+
+[node name="Death Screen" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CenterContainer" type="CenterContainer" parent="Death Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Death Screen/CenterContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.447059, 0, 0, 1)
+text = "YOU DIED"
+
+[node name="Respawn Timer" type="Timer" parent="Death Screen"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Death Screen/Respawn Timer" to="." method="_on_respawn_timer_timeout"]

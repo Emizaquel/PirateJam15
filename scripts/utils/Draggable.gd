@@ -1,30 +1,61 @@
-extends CharacterBody2D
+extends Node2D
 
-var holder:CharacterBody2D = null
-var mobile: bool = true
-@onready var player = Globals.player #uniqe name doesn't seem to work for me, maybe you can fix it later Daniel
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var grabbable:bool = false
+var grabbed:bool = false
+var offset:Vector2
+@onready var footprint = $"../footprint/Shape"
+@onready var base_height = $"..".height
+@onready var player_body = Globals.player.find_child("body")
+
+func _ready():
+	$Detector.position = Vector2(0, $"..".depth/2)
+	var new_shape = RectangleShape2D.new()
+	new_shape.size.x = $"..".width+2
+	new_shape.size.y = $"..".depth+2
+	$Detector/Shape.set_shape(new_shape)
+	
+func _on_detector_body_entered(body):
+	if(player_body == body):
+		grabbable = true
+	pass # Replace with function body.
+
+
+func _on_detector_body_exited(body):
+	if(player_body == body):
+		grabbable = false
+	pass # Replace with function body.
 
 func _physics_process(delta):
-	pass
-
-
-func _on_area_2d_body_entered(body):
-	if (body == player):
-		$Label.visible = true
-		holder = player
-	pass # Replace with function body.
-
-
-func _on_area_2d_body_exited(body):
-	if (body == player):
-		$Label.visible = false
-		holder = null
-	pass # Replace with function body.
+	if(grabbed):
+		if(Globals.player.moving):
+			if not ($"Drag Loop".playing or $"Drag Start".playing):
+				$"Drag Start".play()
+		if(player_body.is_on_floor()):
+			if not Input.is_action_pressed("interact"):
+				footprint.reparent($"../footprint")
+				$"../Platform/Shape".disabled = false
+				grabbed = false
+		$"..".global_position = Globals.player.global_position - offset
+		position.y = -Globals.player_bodiez
+		$"..".z_pos = Globals.player_bodiez
+		$"../Left Shadow"._ready()
+		$"../Right Shadow"._ready()
+		$"../Top Shadow"._ready()
+		$"../Bottom Shadow"._ready()
+		$"../Platform"._ready()
+	if not Globals.player.moving:
+		if($"Drag Loop".playing):
+			$"Drag Loop".stop()
+			$"Drag End".play()
 
 func _input(event):
-	if(holder != null):
-		if event.is_action_pressed("interact"):
-			$"State Machine".interact()
-	if event.is_action_released("interact"):
-		pass
+	if(event.is_action_pressed("interact") && grabbable):
+		$"../Platform/Shape".disabled = true
+		offset = Globals.player.global_position - $"..".global_position
+		footprint.reparent(Globals.player)
+		grabbed = true
+
+
+func _on_drag_start_finished():
+	$"Drag Loop".play()
+	pass # Replace with function body.

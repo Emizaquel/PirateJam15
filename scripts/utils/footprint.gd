@@ -1,5 +1,4 @@
 extends StaticBody2D
-@onready var clearance = $"..".height
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -7,7 +6,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
+	var clearance = $"..".height + $"..".z_pos
 	if(Globals.player_bodiez > clearance):
 		set_collision_layer_value(4,false)
 		$"..".under = false

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5g6croge6xl3"]
+
+[ext_resource type="Script" path="res://scripts/utils/Flat.gd" id="1_e7bx1"]
+[ext_resource type="Shader" path="res://scripts/shaders/shadow.gdshader" id="4_ap123"]
+[ext_resource type="Script" path="res://scripts/utils/Shadow.gd" id="6_ad4fe"]
+[ext_resource type="Script" path="res://scripts/utils/Bottom Shadow.gd" id="7_f3phq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6sy1"]
+shader = ExtResource("4_ap123")
+shader_parameter/shadow_darkness = 0.6
+
+[node name="Flat" type="Node2D"]
+script = ExtResource("1_e7bx1")
+
+[node name="Bottom Shadow" type="Polygon2D" parent="."]
+z_index = -10
+material = SubResource("ShaderMaterial_f6sy1")
+color = Color(0, 0, 0, 0.784314)
+script = ExtResource("7_f3phq")
+
+[node name="Shadow" type="Area2D" parent="Bottom Shadow"]
+visible = false
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("6_ad4fe")
+
+[node name="Shape" type="CollisionPolygon2D" parent="Bottom Shadow/Shadow"]

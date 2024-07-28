@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=3 uid="uid://c83jjh7p2ytao"]
+
+[ext_resource type="PackedScene" uid="uid://c6gd1tffxsxoc" path="res://Components/Day Player.tscn" id="1_35b6i"]
+[ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_ae1pp"]
+[ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="3_0hpg8"]
+[ext_resource type="PackedScene" uid="uid://b5g6croge6xl3" path="res://Components/Flat.tscn" id="4_i4vl8"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_v6nhx"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4ypso"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amlv3"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rnsrm"]
+normal = Vector2(0, 1)
+distance = -45.0
+
+[node name="Tutorial" type="Node2D"]
+y_sort_enabled = true
+position = Vector2(1, 0)
+
+[node name="World Boundary" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World Boundary"]
+position = Vector2(0, 322)
+shape = SubResource("WorldBoundaryShape2D_v6nhx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="World Boundary"]
+position = Vector2(480, 0)
+shape = SubResource("WorldBoundaryShape2D_4ypso")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="World Boundary"]
+shape = SubResource("WorldBoundaryShape2D_amlv3")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="World Boundary"]
+position = Vector2(251, 172)
+shape = SubResource("WorldBoundaryShape2D_rnsrm")
+
+[node name="Player" parent="." instance=ExtResource("1_35b6i")]
+position = Vector2(105, 244)
+
+[node name="UI" parent="." instance=ExtResource("2_ae1pp")]
+
+[node name="Building" parent="." instance=ExtResource("3_0hpg8")]
+position = Vector2(114, 193)
+height = 25.0
+width = 80.0
+depth = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Building"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+color = Color(0.294118, 0.0862745, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Building"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = -25.0
+offset_right = 40.0
+offset_bottom = 15.0
+grow_horizontal = 2
+color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
+
+[node name="Flat" parent="." instance=ExtResource("4_i4vl8")]
+position = Vector2(204, 127)
+height = 80.0
+width = 200.0
+
+[node name="ColorRect" type="ColorRect" parent="Flat"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0.329412, 0, 1)

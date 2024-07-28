@@ -1,11 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1ik27n60bxc2"]
+[gd_scene load_steps=10 format=3 uid="uid://d1ik27n60bxc2"]
 
 [ext_resource type="Script" path="res://scripts/utils/Map_Handler.gd" id="1_lu411"]
-[ext_resource type="PackedScene" uid="uid://blc6o71m2tg2y" path="res://Components/Player.tscn" id="2_82aat"]
 [ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_c3l83"]
-[ext_resource type="Script" path="res://scripts/utils/bulk.gd" id="3_wrwy3"]
-[ext_resource type="Texture2D" uid="uid://duju37oxn3vrw" path="res://assets/crate.png" id="7_dr21o"]
-[ext_resource type="Script" path="res://scripts/utils/Platform.gd" id="8_uxupk"]
+[ext_resource type="PackedScene" uid="uid://dkmkrs7hwgxt5" path="res://Components/Night Player.tscn" id="5_m03kb"]
+[ext_resource type="PackedScene" uid="uid://clru82si7dfon" path="res://Components/Crate.tscn" id="7_ot37m"]
 [ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="13_msmdg"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eidg6"]
@@ -20,25 +18,12 @@ normal = Vector2(1, 0)
 normal = Vector2(0, 1)
 distance = -45.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b41gx"]
-size = Vector2(120, 30)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugus4"]
-size = Vector2(124, 34)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ccht"]
-size = Vector2(110, 27)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_t1q6g"]
-a = Vector2(-9, -149)
-b = Vector2(8, -149)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_66320"]
-size = Vector2(20, 31)
-
 [node name="LayeredTest" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_lu411")
+
+[node name="Player" parent="." instance=ExtResource("5_m03kb")]
+position = Vector2(258, 216)
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -54,6 +39,7 @@ color = Color(0.116035, 0.000175003, 0.29312, 1)
 [node name="UI" parent="." instance=ExtResource("2_c3l83")]
 
 [node name="Street" type="Node2D" parent="."]
+z_index = -25
 
 [node name="Polygon2D7" type="Polygon2D" parent="Street"]
 position = Vector2(0, 132)
@@ -75,7 +61,7 @@ polygon = PackedVector2Array(0, 0, 480, 0, 480, 700, 0, 700)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Street/World Boundary"]
-position = Vector2(0, 272)
+position = Vector2(0, 322)
 shape = SubResource("WorldBoundaryShape2D_eidg6")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Street/World Boundary"]
@@ -88,206 +74,6 @@ shape = SubResource("WorldBoundaryShape2D_bkkay")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Street/World Boundary"]
 position = Vector2(5, 177)
 shape = SubResource("WorldBoundaryShape2D_k1trj")
-
-[node name="Buildin5" type="Node2D" parent="."]
-position = Vector2(753, -63)
-
-[node name="Art" type="Node2D" parent="Buildin5"]
-position = Vector2(0, 30)
-
-[node name="Polygon2D" type="Polygon2D" parent="Buildin5/Art"]
-position = Vector2(-60, -180)
-color = Color(0.245984, 0.245984, 0.245984, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 180, 0, 180)
-
-[node name="Polygon2D3" type="Polygon2D" parent="Buildin5/Art"]
-position = Vector2(-60, -180)
-color = Color(0.582376, 0.582376, 0.582376, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Buildin5/Art"]
-position = Vector2(-60, -98)
-color = Color(0.582376, 0.582376, 0.582376, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
-
-[node name="Polygon2D4" type="Polygon2D" parent="Buildin5/Art"]
-position = Vector2(-60, -150)
-color = Color(0.15967, 0.15967, 0.15967, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
-
-[node name="Polygon2D5" type="Polygon2D" parent="Buildin5/Art"]
-position = Vector2(-60, -68)
-color = Color(0.15967, 0.15967, 0.15967, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
-
-[node name="Bulk" type="StaticBody2D" parent="Buildin5"]
-position = Vector2(0, 30)
-collision_layer = 8
-collision_mask = 0
-script = ExtResource("3_wrwy3")
-building_height = 150.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buildin5/Bulk"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_b41gx")
-
-[node name="Area2D" type="Area2D" parent="Buildin5/Bulk"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buildin5/Bulk/Area2D"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_ugus4")
-
-[node name="Platform" type="Area2D" parent="Buildin5"]
-position = Vector2(0, 30)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("8_uxupk")
-
-[node name="ground area" type="CollisionShape2D" parent="Buildin5/Platform"]
-position = Vector2(4, -16)
-shape = SubResource("RectangleShape2D_1ccht")
-
-[node name="Floors" type="StaticBody2D" parent="Buildin5/Platform"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="upper area" type="CollisionShape2D" parent="Buildin5/Platform/Floors"]
-position = Vector2(1, 0)
-shape = SubResource("SegmentShape2D_t1q6g")
-
-[node name="Platform2" type="Area2D" parent="Buildin5"]
-position = Vector2(0, 61)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("8_uxupk")
-
-[node name="ground area" type="CollisionShape2D" parent="Buildin5/Platform2"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_1ccht")
-
-[node name="Floors" type="StaticBody2D" parent="Buildin5/Platform2"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="upper area" type="CollisionShape2D" parent="Buildin5/Platform2/Floors"]
-position = Vector2(0, -83.5)
-rotation = -3.14159
-shape = SubResource("RectangleShape2D_66320")
-one_way_collision = true
-
-[node name="Walkable" type="CollisionShape2D" parent="Buildin5/Platform2/Floors"]
-position = Vector2(0, -83.5)
-rotation = -6.28318
-shape = SubResource("RectangleShape2D_66320")
-one_way_collision = true
-
-[node name="Building2" type="Node2D" parent="."]
-position = Vector2(554, -28)
-
-[node name="Art" type="Node2D" parent="Building2"]
-position = Vector2(0, 30)
-
-[node name="Polygon2D" type="Polygon2D" parent="Building2/Art"]
-position = Vector2(-60, -180)
-color = Color(0.245984, 0.245984, 0.245984, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 180, 0, 180)
-
-[node name="Polygon2D3" type="Polygon2D" parent="Building2/Art"]
-position = Vector2(-60, -180)
-color = Color(0.582376, 0.582376, 0.582376, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Building2/Art"]
-position = Vector2(-60, -98)
-color = Color(0.582376, 0.582376, 0.582376, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 30, 0, 30)
-
-[node name="Polygon2D4" type="Polygon2D" parent="Building2/Art"]
-position = Vector2(-60, -150)
-color = Color(0.15967, 0.15967, 0.15967, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
-
-[node name="Polygon2D5" type="Polygon2D" parent="Building2/Art"]
-position = Vector2(-60, -68)
-color = Color(0.15967, 0.15967, 0.15967, 1)
-polygon = PackedVector2Array(0, 0, 120, 0, 120, 5, 0, 5)
-
-[node name="Bulk" type="StaticBody2D" parent="Building2"]
-visible = false
-position = Vector2(0, 30)
-collision_layer = 8
-collision_mask = 0
-script = ExtResource("3_wrwy3")
-building_height = 150.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Building2/Bulk"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_b41gx")
-
-[node name="Area2D" type="Area2D" parent="Building2/Bulk"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Building2/Bulk/Area2D"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_ugus4")
-
-[node name="Platform" type="Area2D" parent="Building2"]
-visible = false
-position = Vector2(0, 30)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("8_uxupk")
-
-[node name="ground area" type="CollisionShape2D" parent="Building2/Platform"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_1ccht")
-
-[node name="Floors" type="StaticBody2D" parent="Building2/Platform"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="upper area" type="CollisionShape2D" parent="Building2/Platform/Floors"]
-position = Vector2(1, 0)
-shape = SubResource("SegmentShape2D_t1q6g")
-
-[node name="Platform2" type="Area2D" parent="Building2"]
-visible = false
-position = Vector2(0, 61)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("8_uxupk")
-
-[node name="ground area" type="CollisionShape2D" parent="Building2/Platform2"]
-position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_1ccht")
-
-[node name="Floors" type="StaticBody2D" parent="Building2/Platform2"]
-collision_layer = 0
-collision_mask = 0
-
-[node name="upper area" type="CollisionShape2D" parent="Building2/Platform2/Floors"]
-position = Vector2(0, -83.5)
-rotation = -3.14159
-shape = SubResource("RectangleShape2D_66320")
-one_way_collision = true
-
-[node name="Walkable" type="CollisionShape2D" parent="Building2/Platform2/Floors"]
-position = Vector2(0, -83.5)
-rotation = -6.28318
-shape = SubResource("RectangleShape2D_66320")
-one_way_collision = true
-
-[node name="Player" parent="." instance=ExtResource("2_82aat")]
-position = Vector2(267, 246)
-
-[node name="Crate" parent="." instance=ExtResource("13_msmdg")]
-position = Vector2(374, 188)
-height = 25.0
-width = 28.0
-depth = 8.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Crate"]
-position = Vector2(0, -16)
-texture = ExtResource("7_dr21o")
 
 [node name="Building" parent="." instance=ExtResource("13_msmdg")]
 position = Vector2(114, 193)
@@ -316,15 +102,5 @@ offset_bottom = 15.0
 grow_horizontal = 2
 color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
 
-[connection signal="body_entered" from="Buildin5/Bulk/Area2D" to="Buildin5/Bulk" method="_on_body_entered"]
-[connection signal="body_exited" from="Buildin5/Bulk/Area2D" to="Buildin5/Bulk" method="_on_body_exited"]
-[connection signal="body_entered" from="Buildin5/Platform" to="Buildin5/Platform" method="_on_body_entered"]
-[connection signal="body_exited" from="Buildin5/Platform" to="Buildin5/Platform" method="_on_body_exited"]
-[connection signal="body_entered" from="Buildin5/Platform2" to="Buildin5/Platform2" method="_on_body_entered"]
-[connection signal="body_exited" from="Buildin5/Platform2" to="Buildin5/Platform2" method="_on_body_exited"]
-[connection signal="body_entered" from="Building2/Bulk/Area2D" to="Building2/Bulk" method="_on_body_entered"]
-[connection signal="body_exited" from="Building2/Bulk/Area2D" to="Building2/Bulk" method="_on_body_exited"]
-[connection signal="body_entered" from="Building2/Platform" to="Building2/Platform" method="_on_body_entered"]
-[connection signal="body_exited" from="Building2/Platform" to="Building2/Platform" method="_on_body_exited"]
-[connection signal="body_entered" from="Building2/Platform2" to="Building2/Platform2" method="_on_body_entered"]
-[connection signal="body_exited" from="Building2/Platform2" to="Building2/Platform2" method="_on_body_exited"]
+[node name="Crate" parent="." instance=ExtResource("7_ot37m")]
+position = Vector2(371, 199)

@@ -34,6 +34,7 @@ func _physics_process(delta):
 	if(position.y < -2):
 		if(velocity.y > 0):
 			if($Sprite.animation == "Up"):
+				print(position.y)
 				$Sprite.play("Peak")
 			else:
 				$Sprite.play("Down")

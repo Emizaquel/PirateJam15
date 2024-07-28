@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://crduuem2k1dob"
+path="res://.godot/imported/Night time soundtrack.wav-2e5e4846c71b3ed8e3dc26c56200e9a6.sample"
+
+[deps]
+
+source_file="res://Sounds/Night time soundtrack.wav"
+dest_files=["res://.godot/imported/Night time soundtrack.wav-2e5e4846c71b3ed8e3dc26c56200e9a6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://csfngxyiveh2x"]
-
-[ext_resource type="Script" path="res://scripts/Player Scripts/Player_Night.gd" id="1_xrnrn"]
-
-[node name="State Machine" type="Node"]
-script = ExtResource("1_xrnrn")

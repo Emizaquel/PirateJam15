@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqsggybrxbhu3"
+path="res://.godot/imported/Steps brick alt 1.wav-4c446cbf9a0292e743f33c11968524a9.sample"
+
+[deps]
+
+source_file="res://Sounds/Steps brick alt 1.wav"
+dest_files=["res://.godot/imported/Steps brick alt 1.wav-4c446cbf9a0292e743f33c11968524a9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
