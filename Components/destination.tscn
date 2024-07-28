@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://crrjvhotaqe3v"]
+
+[ext_resource type="Script" path="res://scripts/utils/Destination.gd" id="1_4e85o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skpoy"]
+
+[node name="Destination" type="Area2D"]
+position = Vector2(352, 170)
+script = ExtResource("1_4e85o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_skpoy")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

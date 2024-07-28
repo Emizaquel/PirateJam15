@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhqtpy761x720"]
+
+[ext_resource type="Script" path="res://scripts/utils/Draggable.gd" id="1_y3sy6"]
+[ext_resource type="AudioStream" uid="uid://c7vy7je8k03s6" path="res://Sounds/Start pushing objects.wav" id="2_8dw7x"]
+[ext_resource type="AudioStream" uid="uid://cce0fhwinls3j" path="res://Sounds/Pushing objects loop.wav" id="3_4vtis"]
+[ext_resource type="AudioStream" uid="uid://dg0mpuaj72de7" path="res://Sounds/End pushing objects.wav" id="4_meqbl"]
+[ext_resource type="Texture2D" uid="uid://duju37oxn3vrw" path="res://assets/crate.png" id="5_8mn4a"]
+
+[node name="Draggable" type="Node2D"]
+script = ExtResource("1_y3sy6")
+
+[node name="Drag Start" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_8dw7x")
+
+[node name="Drag Loop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_4vtis")
+
+[node name="Drag End" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_meqbl")
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 65536
+collision_mask = 65536
+
+[node name="Shape" type="CollisionShape2D" parent="Detector"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -16)
+texture = ExtResource("5_8mn4a")
+
+[connection signal="finished" from="Drag Start" to="." method="_on_drag_start_finished"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]

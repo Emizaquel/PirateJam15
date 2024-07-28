@@ -104,3 +104,4 @@ color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
 
 [node name="Crate" parent="." instance=ExtResource("7_ot37m")]
 position = Vector2(371, 199)
+save_id = &"layeredtestcrate"

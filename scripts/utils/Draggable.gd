@@ -6,6 +6,7 @@ var offset:Vector2
 @onready var footprint = $"../footprint/Shape"
 @onready var base_height = $"..".height
 @onready var player_body = Globals.player.find_child("body")
+@onready var save_id = $"..".save_id
 
 func _ready():
 	$Detector.position = Vector2(0, $"..".depth/2)
@@ -35,6 +36,7 @@ func _physics_process(delta):
 				footprint.reparent($"../footprint")
 				$"../Platform/Shape".disabled = false
 				grabbed = false
+				Globals.saved_data[save_id] = {"position":$"..".global_position}
 		$"..".global_position = Globals.player.global_position - offset
 		position.y = -Globals.player_bodiez
 		$"..".z_pos = Globals.player_bodiez

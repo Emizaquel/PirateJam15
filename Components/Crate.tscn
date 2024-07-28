@@ -1,39 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://clru82si7dfon"]
+[gd_scene load_steps=4 format=3 uid="uid://clru82si7dfon"]
 
 [ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="1_4umjd"]
-[ext_resource type="Texture2D" uid="uid://duju37oxn3vrw" path="res://assets/crate.png" id="2_aq3ne"]
-[ext_resource type="AudioStream" uid="uid://c7vy7je8k03s6" path="res://Sounds/Start pushing objects.wav" id="3_buus2"]
-[ext_resource type="Script" path="res://scripts/utils/Draggable.gd" id="3_dof4r"]
-[ext_resource type="AudioStream" uid="uid://cce0fhwinls3j" path="res://Sounds/Pushing objects loop.wav" id="4_kefbl"]
-[ext_resource type="AudioStream" uid="uid://dg0mpuaj72de7" path="res://Sounds/End pushing objects.wav" id="5_g8c8g"]
+[ext_resource type="Script" path="res://scripts/utils/Draggable Object.gd" id="2_d7cgv"]
+[ext_resource type="PackedScene" uid="uid://bhqtpy761x720" path="res://Components/draggable.tscn" id="3_ixt21"]
 
 [node name="Crate" instance=ExtResource("1_4umjd")]
+script = ExtResource("2_d7cgv")
 height = 25.0
 width = 28.0
 depth = 10.0
+save_id = ""
 
-[node name="Draggable" type="Node2D" parent="." index="6"]
-script = ExtResource("3_dof4r")
-
-[node name="Drag Start" type="AudioStreamPlayer2D" parent="Draggable" index="0"]
-stream = ExtResource("3_buus2")
-
-[node name="Drag Loop" type="AudioStreamPlayer2D" parent="Draggable" index="1"]
-stream = ExtResource("4_kefbl")
-
-[node name="Drag End" type="AudioStreamPlayer2D" parent="Draggable" index="2"]
-stream = ExtResource("5_g8c8g")
-
-[node name="Detector" type="Area2D" parent="Draggable" index="3"]
-collision_layer = 65536
-collision_mask = 65536
-
-[node name="Shape" type="CollisionShape2D" parent="Draggable/Detector" index="0"]
-
-[node name="Sprite2D" type="Sprite2D" parent="Draggable" index="4"]
-position = Vector2(-1, -16)
-texture = ExtResource("2_aq3ne")
-
-[connection signal="finished" from="Draggable/Drag Start" to="Draggable" method="_on_drag_start_finished"]
-[connection signal="body_entered" from="Draggable/Detector" to="Draggable" method="_on_detector_body_entered"]
-[connection signal="body_exited" from="Draggable/Detector" to="Draggable" method="_on_detector_body_exited"]
+[node name="Draggable" parent="." index="6" instance=ExtResource("3_ixt21")]

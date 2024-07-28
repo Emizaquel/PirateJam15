@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="PirateJam15"
-run/main_scene="res://scenes/Layered Test.tscn"
+run/main_scene="res://scenes/Tutorial.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/icon.png"
 

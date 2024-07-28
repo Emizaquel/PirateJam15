@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c83jjh7p2ytao"]
+[gd_scene load_steps=10 format=3 uid="uid://c83jjh7p2ytao"]
 
 [ext_resource type="PackedScene" uid="uid://c6gd1tffxsxoc" path="res://Components/Day Player.tscn" id="1_35b6i"]
 [ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_ae1pp"]
 [ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="3_0hpg8"]
 [ext_resource type="PackedScene" uid="uid://b5g6croge6xl3" path="res://Components/Flat.tscn" id="4_i4vl8"]
+[ext_resource type="PackedScene" uid="uid://crrjvhotaqe3v" path="res://Components/destination.tscn" id="5_n1n0e"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_v6nhx"]
 
@@ -88,3 +89,19 @@ offset_right = 100.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0.329412, 0, 1)
+
+[node name="Building2" parent="." instance=ExtResource("3_0hpg8")]
+position = Vector2(353, 120)
+height = 60.0
+width = 100.0
+depth = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Building2"]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = 40.0
+color = Color(0.236334, 0.236334, 0.236334, 1)
+
+[node name="Destination" parent="." instance=ExtResource("5_n1n0e")]
+new_scene = "res://scenes/Lair.tscn"

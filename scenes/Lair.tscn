@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://sna8k73mi26t"]
+
+[ext_resource type="PackedScene" uid="uid://dkmkrs7hwgxt5" path="res://Components/Night Player.tscn" id="1_prs71"]
+[ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_htqax"]
+[ext_resource type="PackedScene" uid="uid://clru82si7dfon" path="res://Components/Crate.tscn" id="3_e6o7f"]
+[ext_resource type="PackedScene" uid="uid://crrjvhotaqe3v" path="res://Components/destination.tscn" id="4_6ilmn"]
+
+[node name="Lair" type="Node2D"]
+y_sort_enabled = true
+
+[node name="UI" parent="." instance=ExtResource("2_htqax")]
+
+[node name="Player" parent="." instance=ExtResource("1_prs71")]
+position = Vector2(249, 453)
+
+[node name="Crate" parent="." instance=ExtResource("3_e6o7f")]
+position = Vector2(297, 446)
+save_id = ""
+
+[node name="Destination" parent="." instance=ExtResource("4_6ilmn")]
+position = Vector2(268, 522)
+new_scene = "res://scenes/Tutorial.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="Destination"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.160784, 0, 0, 0.792157)

@@ -9,13 +9,11 @@ var pos_set:bool = false
 var player_pos:Vector2 = Vector2.ZERO
 var player_bodiez:float = 0.0
 var player:CharacterBody2D
-var looted:Array = []
+var saved_data:Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SaveFile.load()
-	print(Globals.looted)
-	print(Globals.looted.find("test_lootable_crate"))
 	daytimer = Timer.new()
 	daytimer.name = "daytimer"
 	daytimer.set_wait_time(60.0)
@@ -26,9 +24,6 @@ func _ready():
 
 func load_player(p:CharacterBody2D):
 	player = p
-	if(pos_set):
-		player.global_position = player_pos
-		pos_set = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -40,4 +35,5 @@ func _process(delta):
 	pass
 
 func save():
+	print("save!")
 	SaveFile.new().save()
