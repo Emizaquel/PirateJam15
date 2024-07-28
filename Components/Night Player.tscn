@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://dkmkrs7hwgxt5"]
+[gd_scene load_steps=31 format=3 uid="uid://dkmkrs7hwgxt5"]
 
 [ext_resource type="Script" path="res://scripts/Player Scripts/Player Night.gd" id="1_fx2ra"]
 [ext_resource type="AudioStream" uid="uid://dqsggybrxbhu3" path="res://Sounds/Steps brick alt 1.wav" id="2_h8v4m"]
 [ext_resource type="AudioStream" uid="uid://bjvud6ccrklvi" path="res://Sounds/Steps brick alt 2.wav" id="3_in44p"]
 [ext_resource type="AudioStream" uid="uid://qhkiinoh7kwg" path="res://Sounds/Steps brick alt 3.wav" id="4_8aylg"]
 [ext_resource type="AudioStream" uid="uid://bonuvoskkuh3k" path="res://Sounds/Steps brick alt 4.wav" id="5_c17wq"]
+[ext_resource type="AudioStream" uid="uid://dyur5orw1xkhn" path="res://Sounds/Night Time.wav" id="6_bg3rb"]
 [ext_resource type="Script" path="res://scripts/Player Scripts/Player Body.gd" id="6_utp7p"]
 [ext_resource type="Texture2D" uid="uid://4f7tie855715" path="res://assets/shadow.png" id="7_3acsx"]
 [ext_resource type="Texture2D" uid="uid://sjw0qierih4h" path="res://assets/Plague_doc_frames.png" id="8_ob5bn"]
@@ -190,6 +191,11 @@ script = ExtResource("1_fx2ra")
 
 [node name="steps" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_xcg2o")
+
+[node name="Night Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bg3rb")
+volume_db = -10.0
+autoplay = true
 
 [node name="body" type="CharacterBody2D" parent="."]
 process_priority = -1

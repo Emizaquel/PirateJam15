@@ -9,11 +9,10 @@ var under:bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(Globals.saved_data.keys())
-	var data = Globals.saved_data.find_key(save_id)
+	var data = Globals.saved_data.get(save_id)
 	if(data != null):
 		print("found")
-		$"..".global_position = data["position"]
+		global_position = data["position"]
 	$"Left Shadow".position = Vector2(-width/2, depth/2)
 	$"Right Shadow".position = Vector2(width/2, depth/2)
 	$"Top Shadow".position = Vector2(0, 0)

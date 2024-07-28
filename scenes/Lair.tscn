@@ -15,7 +15,7 @@ position = Vector2(249, 453)
 
 [node name="Crate" parent="." instance=ExtResource("3_e6o7f")]
 position = Vector2(297, 446)
-save_id = ""
+save_id = "lair crate"
 
 [node name="Destination" parent="." instance=ExtResource("4_6ilmn")]
 position = Vector2(268, 522)
