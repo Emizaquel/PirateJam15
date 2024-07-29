@@ -20,6 +20,7 @@ var seen_sky = false
 @onready var last_shadow:Node2D = $"."
 func _physics_process(delta):
 	if(Detect_Sky()):
+		#$"Hurt Sound".play()
 		velocity *=-5
 		position += (last_shadow.global_position - global_position).normalized()*5
 		move_and_slide()

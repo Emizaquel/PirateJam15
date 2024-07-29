@@ -16,7 +16,6 @@ shader_parameter/shadow_darkness = 0.6
 script = ExtResource("1_btwdn")
 
 [node name="footprint" parent="." instance=ExtResource("2_tlxen")]
-visible = false
 
 [node name="Shape" type="CollisionShape2D" parent="footprint"]
 

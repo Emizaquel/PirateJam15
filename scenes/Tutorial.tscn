@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://c83jjh7p2ytao"]
+[gd_scene load_steps=13 format=3 uid="uid://c83jjh7p2ytao"]
 
 [ext_resource type="PackedScene" uid="uid://c6gd1tffxsxoc" path="res://Components/Day Player.tscn" id="1_35b6i"]
 [ext_resource type="PackedScene" uid="uid://bl50fx1d6q337" path="res://Components/ui.tscn" id="2_ae1pp"]
+[ext_resource type="TileSet" uid="uid://byjiohck0khme" path="res://assets/building.tres" id="2_w0p2g"]
 [ext_resource type="PackedScene" uid="uid://c51as2axcadse" path="res://Components/Building.tscn" id="3_0hpg8"]
 [ext_resource type="PackedScene" uid="uid://b5g6croge6xl3" path="res://Components/Flat.tscn" id="4_i4vl8"]
+[ext_resource type="TileSet" uid="uid://bfff4fcrqpy2r" path="res://assets/decor.tres" id="5_2lmh8"]
 [ext_resource type="PackedScene" uid="uid://crrjvhotaqe3v" path="res://Components/destination.tscn" id="5_n1n0e"]
+[ext_resource type="Texture2D" uid="uid://v463ves8pjhl" path="res://assets/door.png" id="8_o7ito"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_v6nhx"]
 
@@ -43,38 +46,31 @@ shape = SubResource("WorldBoundaryShape2D_amlv3")
 position = Vector2(251, 172)
 shape = SubResource("WorldBoundaryShape2D_rnsrm")
 
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
 [node name="Player" parent="." instance=ExtResource("1_35b6i")]
 position = Vector2(164, 583)
 
 [node name="Building" parent="." instance=ExtResource("3_0hpg8")]
-position = Vector2(173, 532)
-height = 25.0
-width = 80.0
-depth = 40.0
+position = Vector2(176, 524)
+height = 48.0
+width = 112.0
+depth = 48.0
 
-[node name="ColorRect" type="ColorRect" parent="Building"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
-grow_horizontal = 2
-color = Color(0.294118, 0.0862745, 0, 1)
+[node name="TileMap2" type="TileMap" parent="Building"]
+position = Vector2(-176, -504)
+tile_set = ExtResource("2_w0p2g")
+format = 2
+layer_0/tile_data = PackedInt32Array(2162696, 262144, 1, 2031624, 65536, 0, 2031625, 65536, 0, 2031626, 65536, 0, 2031627, 65536, 0, 2031629, 65536, 0, 2162698, 65536, 1, 2162699, 65536, 1, 1900552, 1, 3, 1900553, 65537, 3, 1900557, 131073, 3, 1900555, 65537, 3, 2162701, 458752, 1, 2031628, 65536, 0)
 
-[node name="ColorRect2" type="ColorRect" parent="Building"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -40.0
-offset_top = -25.0
-offset_right = 40.0
-offset_bottom = 15.0
-grow_horizontal = 2
-color = Color(0.0943261, 0.0135022, 1.50409e-09, 1)
+[node name="TileMap3" type="TileMap" parent="Building"]
+tile_set = ExtResource("5_2lmh8")
+format = 2
+layer_0/tile_data = PackedInt32Array(65537, 65536, 19)
 
 [node name="Flat" parent="." instance=ExtResource("4_i4vl8")]
-position = Vector2(263, 466)
+position = Vector2(260, 466)
 height = 80.0
 width = 200.0
 
@@ -91,19 +87,34 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0.329412, 0, 1)
 
+[node name="TileMap" type="TileMap" parent="Flat"]
+format = 2
+
 [node name="Building2" parent="." instance=ExtResource("3_0hpg8")]
-position = Vector2(412, 459)
+position = Vector2(425, 452)
 height = 60.0
-width = 100.0
+width = 128.0
 depth = 40.0
 
-[node name="ColorRect" type="ColorRect" parent="Building2"]
-offset_left = -50.0
-offset_top = -60.0
-offset_right = 50.0
-offset_bottom = 40.0
-color = Color(0.236334, 0.236334, 0.236334, 1)
+[node name="TileMap" type="TileMap" parent="Building2"]
+position = Vector2(-425, -432)
+tile_set = ExtResource("2_w0p2g")
+format = 2
+layer_0/tile_data = PackedInt32Array(1835031, 0, 1, 1638423, 0, 1, 1638427, 65536, 1, 1703963, 65536, 1, 1769499, 65536, 1, 1835035, 65536, 1, 1638429, 131072, 1, 1703965, 131072, 1, 1769501, 131072, 1, 1835037, 131072, 1, 1507351, 65536, 3, 1507352, 65536, 3, 1507355, 65536, 3, 1507356, 65536, 3, 1507357, 65536, 3, 1376279, 65537, 2, 1376280, 65537, 2, 1376281, 65537, 2, 1376282, 65537, 2, 1376283, 65537, 2, 1376284, 65537, 2, 1376285, 65537, 2, 1310743, 65537, 3, 1310744, 65537, 3, 1310745, 65537, 3, 1310746, 65537, 3, 1310747, 65537, 3, 1310748, 65537, 3, 1310749, 65537, 3, 1441815, 65537, 2, 1441816, 65537, 2, 1441817, 65537, 2, 1441818, 65537, 2, 1441819, 65537, 2, 1441820, 65537, 2, 1441821, 65537, 2, 1769495, 0, 1, 1507353, 65536, 3, 1507354, 65536, 3, 1769496, 65536, 1, 1835033, 65536, 1, 1769497, 65536, 1, 1638425, 65536, 1)
+
+[node name="TileMap2" type="TileMap" parent="Building2"]
+tile_set = ExtResource("5_2lmh8")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65534, 65536, 22, -3, 65536, 22)
 
 [node name="Destination" parent="." instance=ExtResource("5_n1n0e")]
 position = Vector2(411, 509)
 new_scene = "res://scenes/Lair.tscn"
+
+[node name="Door" type="Sprite2D" parent="."]
+position = Vector2(151, 540)
+texture = ExtResource("8_o7ito")
+
+[node name="Door2" type="Sprite2D" parent="."]
+position = Vector2(424, 460)
+texture = ExtResource("8_o7ito")

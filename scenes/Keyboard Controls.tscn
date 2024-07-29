@@ -1,0 +1,151 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctux2j3jg08wj"]
+
+[ext_resource type="Script" path="res://scripts/utils/Controller Controls.gd" id="1_6mrrb"]
+[ext_resource type="Texture2D" uid="uid://4co0ag5j0dip" path="res://assets/controller.png" id="2_b5atl"]
+
+[node name="Controls" type="Node2D"]
+script = ExtResource("1_6mrrb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.129412)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CenterContainer"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_b5atl")
+
+[node name="Cross" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = -39.0
+offset_right = -46.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MOVEMENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right Stick" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 95.0
+offset_top = 54.0
+offset_right = 195.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ASSIGN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Left Stick" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = 52.0
+offset_right = -98.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MOVEMENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Top" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 46.0
+offset_top = -76.0
+offset_right = 146.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "JUMP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Down" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 45.0
+offset_top = -8.0
+offset_right = 145.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DROP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Left" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -42.0
+offset_right = 94.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -42.0
+offset_right = 200.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "INTERACT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 68.0
+offset_bottom = 36.0
+text = "< BACK"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

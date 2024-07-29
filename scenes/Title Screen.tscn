@@ -33,17 +33,34 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Game Start" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+[node name="HBoxContainer" type="GridContainer" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Game Start" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 text = "Start"
 
-[node name="Controls" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer"]
+[node name="Continue" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Controls"
+text = "Continue
+"
+
+[node name="Controller" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Controller"
+
+[node name="Keyboard" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Keyboard
+"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_f0g7k")
 volume_db = -4.935
 autoplay = true
 
-[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/Game Start" to="." method="_on_game_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer/Game Start" to="." method="_on_game_start_pressed"]

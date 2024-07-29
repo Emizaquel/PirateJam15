@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c6gd1tffxsxoc"]
+[gd_scene load_steps=28 format=3 uid="uid://c6gd1tffxsxoc"]
 
 [ext_resource type="Script" path="res://scripts/Player Scripts/Player Day.gd" id="1_n5jpi"]
 [ext_resource type="PackedScene" uid="uid://d2u2q6y5dspji" path="res://Components/step sounds.tscn" id="5_cimm3"]
@@ -167,6 +167,11 @@ height = 23.0
 a = Vector2(-8, 4)
 b = Vector2(8, 4)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fslom"]
+playback_mode = 2
+random_pitch = 1.2
+random_volume_offset_db = 3.0
+
 [node name="Player" type="CharacterBody2D"]
 process_priority = -1
 collision_layer = 11
@@ -230,5 +235,8 @@ shape = SubResource("CapsuleShape2D_4w64b")
 [node name="Day Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_eayuq")
 autoplay = true
+
+[node name="Hurt Sound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_fslom")
 
 [node name="Steps" parent="." instance=ExtResource("5_cimm3")]
