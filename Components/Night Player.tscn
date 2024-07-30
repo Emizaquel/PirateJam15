@@ -228,6 +228,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4w64b")
 
 [node name="Night Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("6_bg3rb")
 volume_db = -10.0
 autoplay = true

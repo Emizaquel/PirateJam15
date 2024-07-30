@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddm8hqb6kxsw6"]
+
+[ext_resource type="Script" path="res://scripts/utils/Key Customizer.gd" id="1_tynyh"]
+
+[node name="Key Customizer" type="CenterContainer"]
+script = ExtResource("1_tynyh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Action"
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Key"
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_button_pressed"]

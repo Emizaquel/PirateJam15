@@ -11,7 +11,6 @@ var under:bool
 func _ready():
 	var data = Globals.saved_data.get(save_id)
 	if(data != null):
-		print("found")
 		global_position = data["position"]
 	$"Left Shadow".position = Vector2(-width/2, depth/2)
 	$"Right Shadow".position = Vector2(width/2, depth/2)

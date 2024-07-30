@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://di0jv346t7gs5"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://di0jv346t7gs5"]
 
 [ext_resource type="Texture2D" uid="uid://dki8ayldytasa" path="res://assets/bricks_tileset.png" id="1_bavq1"]
+[ext_resource type="Texture2D" uid="uid://cng7lwgvxkb0d" path="res://assets/dirty wood floors.png" id="2_6gaqb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bnbp7"]
 texture = ExtResource("1_bavq1")
@@ -194,5 +195,26 @@ texture_region_size = Vector2i(32, 32)
 16:9/0 = 0
 17:9/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wreek"]
+texture = ExtResource("2_6gaqb")
+texture_region_size = Vector2i(32, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_bnbp7")
+sources/1 = SubResource("TileSetAtlasSource_wreek")

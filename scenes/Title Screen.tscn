@@ -44,6 +44,7 @@ text = "Start"
 
 [node name="Continue" type="Button" parent="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Continue
 "
 
@@ -64,3 +65,6 @@ volume_db = -4.935
 autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer/Game Start" to="." method="_on_game_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer/Controller" to="." method="_on_controller_pressed"]
+[connection signal="pressed" from="CanvasLayer/ColorRect/CenterContainer/VBoxContainer/HBoxContainer/Keyboard" to="." method="_on_keyboard_pressed"]

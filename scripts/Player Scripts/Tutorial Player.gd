@@ -17,8 +17,12 @@ func _ready():
 	Globals.load_player($".")
 
 @onready var last_shadow:Node2D = $"."
+var unharmed = false
 func _physics_process(delta):
 	if(Detect_Sky()):
+		if(unharmed):
+			$"../UI".text_box("ARRGHH! That hurts! I really need to get inside!")
+			unharmed = false
 		#$"Hurt Sound".play()
 		velocity *=-5
 		position += (last_shadow.global_position - global_position).normalized()*5
@@ -33,7 +37,7 @@ func _physics_process(delta):
 func Detect_Sky():
 	var shadows:Array = $"True Shadow".get_overlapping_areas()
 	if(shadows.size() > 0):
-		last_shadow = shadows[0]
+		last_shadow = shadows[-1]
 		return false
 	return true
 

@@ -23,9 +23,20 @@ func set_movement_controls():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if $CanvasLayer/ColorRect2/Timer.is_stopped():
+		$CanvasLayer/ColorRect2.visible = false
+	else:
+		$CanvasLayer/ColorRect2.self_modulate = Color(1,1,1, $CanvasLayer/ColorRect2/Timer.time_left/$CanvasLayer/ColorRect2/Timer.wait_time)
+		$CanvasLayer/ColorRect2.visible = true
 	pass
 
 
 func _on_button_pressed():
+	var space = InputEventKey.new()
+	space.keycode = KEY_SPACE
+	space.pressed = true
+	if not InputMap.event_is_action(space,"interact"):
+		InputMap.action_add_event("interact", space)
+	Globals.save()
 	get_tree().change_scene_to_file("res://scenes/Title Screen.tscn")
 	pass # Replace with function body.

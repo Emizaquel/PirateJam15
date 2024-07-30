@@ -1,12 +1,40 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctux2j3jg08wj"]
 
 [ext_resource type="Script" path="res://scripts/utils/Controller Controls.gd" id="1_6mrrb"]
-[ext_resource type="Texture2D" uid="uid://4co0ag5j0dip" path="res://assets/controller.png" id="2_b5atl"]
+[ext_resource type="PackedScene" uid="uid://ddm8hqb6kxsw6" path="res://Components/key_customizer.tscn" id="2_5eu7d"]
 
 [node name="Controls" type="Node2D"]
 script = ExtResource("1_6mrrb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+visible = false
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.8)
+
+[node name="Timer" type="Timer" parent="CanvasLayer/ColorRect2"]
+wait_time = 0.5
+one_shot = true
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ColorRect2/CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.423529, 0, 0, 1)
+text = "That key is in use!"
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -16,130 +44,76 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
-modulate = Color(1, 1, 1, 0.129412)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+[node name="MarginContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CenterContainer"]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_b5atl")
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 3
 
-[node name="Cross" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -146.0
-offset_top = -39.0
-offset_right = -46.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "MOVEMENT"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
 
-[node name="Right Stick" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 95.0
-offset_top = 54.0
-offset_right = 195.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "ASSIGN"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Up" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "Up"
+action = "move_up"
 
-[node name="Left Stick" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -198.0
-offset_top = 52.0
-offset_right = -98.0
-offset_bottom = 75.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "MOVEMENT"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Control3" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
 
-[node name="Top" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 46.0
-offset_top = -76.0
-offset_right = 146.0
-offset_bottom = -45.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "JUMP"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Left" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "Left"
+action = "move_left"
 
-[node name="Down" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 45.0
-offset_top = -8.0
-offset_right = 145.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "DROP"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Control2" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
 
-[node name="Left" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.0
-offset_top = -42.0
-offset_right = 94.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Right" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "Right"
+action = "move_right"
 
-[node name="Right" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 100.0
-offset_top = -42.0
-offset_right = 200.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "INTERACT"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Control4" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Down" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "Down"
+action = "move_down"
+
+[node name="Control5" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Control6" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Control7" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 26.45)
+layout_mode = 2
+
+[node name="Control8" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Jump" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "Jump"
+action = "jump"
+
+[node name="Control9" type="Control" parent="CanvasLayer/MarginContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Drag" parent="CanvasLayer/MarginContainer/GridContainer" instance=ExtResource("2_5eu7d")]
+layout_mode = 2
+action_label = "drag/interact"
+action = "interact"
 
 [node name="Button" type="Button" parent="CanvasLayer"]
 offset_left = 5.0

@@ -10,13 +10,14 @@ var player_pos:Vector2 = Vector2.ZERO
 var player_bodiez:float = 0.0
 var player:CharacterBody2D
 var saved_data:Dictionary
+var is_night:bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SaveFile.load()
 	daytimer = Timer.new()
 	daytimer.name = "daytimer"
-	daytimer.set_wait_time(60.0)
+	daytimer.set_wait_time(300.0)
 	add_child(daytimer)
 	await get_tree().process_frame
 	daytimer.start()

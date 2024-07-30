@@ -35,6 +35,7 @@ func _physics_process(delta):
 			if not Input.is_action_pressed("interact"):
 				footprint.reparent($"../footprint")
 				$"../Platform/Shape".disabled = false
+				footprint.position = Vector2.ZERO
 				grabbed = false
 				Globals.saved_data[save_id] = {"position":$"..".global_position}
 		$"..".global_position = Globals.player.global_position - offset
@@ -51,7 +52,7 @@ func _physics_process(delta):
 			$"Drag End".play()
 
 func _input(event):
-	if(event.is_action_pressed("interact") && grabbable):
+	if(event.is_action_pressed("interact") && grabbable && Globals.is_night):
 		$"../Platform/Shape".disabled = true
 		offset = Globals.player.global_position - $"..".global_position
 		footprint.reparent(Globals.player)

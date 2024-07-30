@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl50fx1d6q337"]
+[gd_scene load_steps=6 format=3 uid="uid://bl50fx1d6q337"]
 
 [ext_resource type="Script" path="res://scripts/utils/UI.gd" id="1_mvy54"]
 [ext_resource type="Texture2D" uid="uid://0llaukmc645w" path="res://assets/health bar.png" id="2_15rhc"]
+[ext_resource type="Texture2D" uid="uid://74vxalok0yu6" path="res://assets/dialog box.png" id="3_104qi"]
+[ext_resource type="Script" path="res://Components/Dialog Box.gd" id="4_re68h"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mjdx3"]
+texture = ExtResource("3_104qi")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
@@ -46,6 +55,18 @@ metadata/_edit_use_anchors_ = true
 [node name="Frame" type="Sprite2D" parent="Margins/Health"]
 position = Vector2(45, 12)
 texture = ExtResource("2_15rhc")
+
+[node name="Label" type="Label" parent="Margins"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxTexture_mjdx3")
+autowrap_mode = 3
+script = ExtResource("4_re68h")
+
+[node name="Timer" type="Timer" parent="Margins/Label"]
+wait_time = 0.1
+autostart = true
 
 [node name="Inventory" type="MarginContainer" parent="."]
 visible = false
@@ -205,4 +226,5 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[connection signal="timeout" from="Margins/Label/Timer" to="Margins/Label" method="_on_timer_timeout"]
 [connection signal="timeout" from="Death Screen/Respawn Timer" to="." method="_on_respawn_timer_timeout"]

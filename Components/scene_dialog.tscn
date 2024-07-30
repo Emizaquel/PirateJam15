@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt4wrwbykn6i1"]
+
+[ext_resource type="Script" path="res://scenes/Scene Dialog.gd" id="1_1qpqc"]
+
+[node name="Scene Dialog" type="Timer"]
+wait_time = 0.5
+autostart = true
+script = ExtResource("1_1qpqc")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

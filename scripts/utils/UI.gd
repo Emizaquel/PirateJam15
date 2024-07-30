@@ -39,3 +39,6 @@ func _on_respawn_timer_timeout():
 	Globals.health = 1.0
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func text_box(to_say:String):
+	$Margins/Label.to_say = to_say
